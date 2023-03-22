@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
           this.navigationList.push({
             category: item.category,
             artists: [item.artist],
-          })
+          });
         }
       }
     });
