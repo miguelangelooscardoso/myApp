@@ -3,9 +3,14 @@ using myApp.API.Models;
 
 namespace myApp.API.DataAccess
 {
-	public class IDataAccess
+	public interface IDataAccess
 	{
-		List<ItemCategory> GetItemCategories();
-	}
+        public List<ItemCategory> GetItemCategories();
+
+        //public List<ItemCategory> GetItemCategories()
+        //{
+        //    //throw new NotImplementedException();
+        //}
+    }
 }
 

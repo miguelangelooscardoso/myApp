@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Category } from 'src/app/models/category';
 import { NavigationItem } from 'src/app/models/navigation-item';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 
@@ -8,9 +10,9 @@ import { RegisterComponent } from '../register/register.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   @ViewChild('modalTitle') modalTitle!: ElementRef;
-  @ViewChild('container', {read: ViewContainerRef, static: true}) 
+  @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
 
   navigationList: NavigationItem[] = [
@@ -36,21 +38,39 @@ export class HeaderComponent implements OnInit{
     }
   ];
 
-  constructor() {
+  constructor(private navigationService: NavigationService) {
   }
 
   ngOnInit(): void {
+    // Get category list
+    this.navigationService.getCategoryList().subscribe((list: Category[]) => {
+      for (let item of list) {
+        let present = false;
+        for (let navItem of this.navigationList) {
+          if (navItem.category === item.category) {
+            navItem.artists.push(item.artist);
+            present = true;
+          }
+        }
+        if (!present) {
+          this.navigationList.push({
+            category: item.category,
+            artists: [item.artist],
+          })
+        }
+      }
+    });
   }
 
   openModal(name: string) {
     this.container.clear()
 
     let componentType!: Type<any>;
-    if( name === 'login') {
+    if (name === 'login') {
       componentType = LoginComponent;
       this.modalTitle.nativeElement.textContent = 'Enter Login Information';
     };
-    if( name === 'register') {
+    if (name === 'register') {
       componentType = RegisterComponent;
       this.modalTitle.nativeElement.textContent = 'Enter Register Information';
     };
