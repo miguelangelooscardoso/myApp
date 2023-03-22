@@ -1,0 +1,13 @@
+<div class="my container mx-auto">
+    <div class="mb-4 my-shadow my-rounded-corner overflow-hidden" *ngFor="let popularItem of popularItems">
+        <div class="item-background position-relative">
+            <button type="button" class="btn btn-outline-light btn-lg">Find more!</button>
+            <img src="assets/Background/{{popularItem.backgroundImage}}" class="w-100" alt="Background Image">
+        </div>
+    
+
+        <div class="item-list py-5">
+            <app-popular-items [category]="popularItem.category"></app-popular-items>
+        </div>
+    </div>
+</div>

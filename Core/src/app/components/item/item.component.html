@@ -1,0 +1,112 @@
+<!-- Grid View -->
+<div class="grid-view" *ngIf="view === 'grid'">
+    <div class="card text-center">
+        <div class="card-header fw-bold fs-5 text-success">
+            Name
+        </div>
+
+        <div class="overflow-hidden d-flex justify-content-center align-items-center">
+            <img src="../../assets/Sculpture/AndreSaraiva/1.png" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="1">
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title title"> Artist </h5>
+            <p class="card-text description"> description </p>
+            <h6 class="card-subtitle mb-3 text-primary"> 12 products are available. </h6>
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title text-success">
+                Discount
+                <span class="text-primary"> -5%
+                </span>
+            </h5>
+            <h6 class="card-subtitle text-danger text-decoration-line-through">
+                Original Price
+            </h6>
+        </div>
+
+        <div class="card-footer text-muted d-grid gap-2">
+            <button type="button" class="btn btn-outline-success">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- List View -->
+<div class="list-view" *ngIf="view === 'list'">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4 overflow-hidden d-flex justify-content-center align-items-center">
+                <img src="../../assets/Sculpture/AndreSaraiva/1.png" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="1">
+            </div>
+            <div class="col d-flex flex-column">
+                <div class="card-header text-center">
+                    Name
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title title"> Artist </h5>
+                    <p class="card-text description"> description </p>
+                    <h6 class="card-subtitle mb-3 text-primary"> 12 products are available. </h6>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title text-muted">Pricing</h4>
+                    <h2 class="card-title text-success">
+                        Discount
+                        <span class="text-primary"> -5% </span>
+                    </h2>
+                    <h5 class="card-subtitle text-danger text-decoration-line-through">
+                        Original Price
+                    </h5>
+                </div>
+
+                <div class="card-footer text-muted d-grid gap-2">
+                    <button type="button" class="btn btn-outline-success">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Current Cart Item View -->
+<div class="cart-item-view" *ngIf="view==='currcartitem'">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-4 overflow-hidden d-flex justify-content-center align-items-center">
+                <img src="../../assets/Sculpture/VitorReis/1.png" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="1">
+            </div>
+            <div class="col-8">
+                <div class="card-body">
+                    <h5 class="card-title">Name</h5>
+                    <h5 class="card-title text-success"> Final Price</h5>
+                    <h6 class="card-subtitle text-danger text-decoration-line-through">Original Price</h6>
+                    <span class="text-primary">11 products are available.</span>
+                </div>
+                <div class="card-footer text-muted d-grid gap-2">
+                    <button class="btn btn-outline-danger" type="button">Remove from cart</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Previous Cart Item View -->
+<div class="cart-item-view" *ngIf="view==='prevcartitem'">
+    <div class="card text-center">
+        <div class="overflow-hidden d-flex justify-content-center align-items-center">
+            <img src="../../assets/Sculpture/AkaCorleone/1.png" class="card-img-top" alt="" OpenItemDetails [itemId]="1">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title title">Name</h5>
+        </div>
+    </div>
+</div>

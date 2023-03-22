@@ -1,0 +1,34 @@
+﻿using System;
+using System.Data.SqlClient;
+using myApp.API.Models;
+
+namespace myApp.API.DataAccess
+{
+	public class DataAccess : IDataAccess
+	{
+		private readonly IConfiguration configuration;
+		private readonly string dbconnection;
+		private readonly string dateformat;
+
+		public DataAccess(IConfiguration configuration)
+		{
+			this.configuration = configuration;
+			dbconnection = this.configuration["ConnectionStrings:DB"];
+			dateformat = this.configuration["Constants:DateFormat"];
+		}
+
+		public List<ItemCategory> GetItemCategories()
+		{
+			var itemCategories = new List<ItemCategory>();
+			using (SqlConnection connection = new(dbconnection))
+			{
+				SqlCommand command = new()
+				{
+					Connection = connection
+				};
+			}
+			return itemCategories;
+		}
+	}
+}
+
