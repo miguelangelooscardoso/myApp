@@ -29,6 +29,13 @@ namespace myApp.API.Controllers
             var result = dataAccess.GetItemCategories();
             return Ok(result);
         }
+
+        [HttpGet("GetItems")]
+        public IActionResult GetItems(string category, string artist, int count)
+        {
+            var result = dataAccess.GetItems(category, artist, count);
+            return Ok(result);
+        }
     }
 }
 

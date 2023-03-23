@@ -11,129 +11,41 @@ export class HomeComponent {
     {
       backgroundImage: '/ceramics.jpeg',
       category: {
-        id: 0,
-        category: 'ceramics',
-        artist: 'Rui',
-      },
-    },
-    {
-      backgroundImage: '/ceramics.jpeg',
-      category: {
         id: 1,
         category: 'ceramics',
-        artist: 'Paulo',
-      },
-    },
-    {
-      backgroundImage: '/ceramics.jpeg',
-      category: {
-        id: 2,
-        category: 'ceramics',
-        artist: 'Bernardo',
+        Artist: 'Nina Malterud',
       },
     },
     {
       backgroundImage: '/glass.jpeg',
       category: {
-        id: 1,
+        id: 3,
         category: 'glass',
-        artist: '',
-      },
-    },
-    {
-      backgroundImage: '/glass.jpeg',
-      category: {
-        id: 0,
-        category: 'glass',
-        artist: 'Maria',
-      },
-    },
-    {
-      backgroundImage: '/glass.jpeg',
-      category: {
-        id: 1,
-        category: 'glass',
-        artist: 'José',
-      },
-    },
-    {
-      backgroundImage: '/glass.jpeg',
-      category: {
-        id: 1,
-        category: 'glass',
-        artist: 'Leandro',
+        Artist: 'Celia Dowson',
       },
     },
     {
       backgroundImage: '/painting.jpeg',
       category: {
-        id: 2,
+        id: 6,
         category: 'painting',
-        artist: 'Luísa',
-      },
-    },
-    {
-      backgroundImage: '/painting.jpeg',
-      category: {
-        id: 2,
-        category: 'painting',
-        artist: 'Manuel',
-      },
-    },
-    {
-      backgroundImage: '/painting.jpeg',
-      category: {
-        id: 2,
-        category: 'painting',
-        artist: 'Paula',
+        Artist: 'Hola Lou',
       },
     },
     {
       backgroundImage: '/sculpture.jpeg',
       category: {
-        id: 3,
+        id: 10,
         category: 'sculpture',
-        artist: 'Leonor',
-      },
-    },
-    {
-      backgroundImage: '/sculpture.jpeg',
-      category: {
-        id: 3,
-        category: 'sculpture',
-        artist: 'Beatriz',
-      },
-    },
-    {
-      backgroundImage: '/sculpture.jpeg',
-      category: {
-        id: 3,
-        category: 'sculpture',
-        artist: 'Maria do Mar',
+        Artist: 'Vhils',
       },
     },
     {
       backgroundImage: '/textile.jpeg',
       category: {
-        id: 4,
+        id: 12,
         category: 'textile',
-        artist: 'Conceição',
-      },
-    },
-    {
-      backgroundImage: '/textile.jpeg',
-      category: {
-        id: 4,
-        category: 'textile',
-        artist: 'Gelson',
-      },
-    },
-    {
-      backgroundImage: '/textile.jpeg',
-      category: {
-        id: 4,
-        category: 'textile',
-        artist: 'Nate',
+        Artist: 'Claire Benn',
       },
     },
   ];

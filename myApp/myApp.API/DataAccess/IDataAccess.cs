@@ -3,14 +3,12 @@ using myApp.API.Models;
 
 namespace myApp.API.DataAccess
 {
-	public interface IDataAccess
+    public interface IDataAccess
 	{
-        public List<ItemCategory> GetItemCategories();
-
-        //public List<ItemCategory> GetItemCategories()
-        //{
-        //    //throw new NotImplementedException();
-        //}
+        List<ItemCategory> GetItemCategories();
+        ItemCategory GetItemCategory(int id);
+        Offer GetOffer(int id);
+        List<Item> GetItems(string category, string artist, int count);
     }
 }
 

@@ -18,23 +18,23 @@ export class HeaderComponent implements OnInit {
   navigationList: NavigationItem[] = [
     {
       category: 'ceramics',
-      artists: ["Rui", "Paulo", "Bernardo"]
+      artists: ["Nina Malterud", "Maria Kristofersson"]
     },
     {
       category: 'glass',
-      artists: ["Maria", "José", "Leandro"]
+      artists: ["Celia Dowson", "Edmond Byrne", "Michéle Oberdieck"]
     },
     {
       category: 'painting',
-      artists: ["Luísa", "Manuel", "Paula"]
+      artists: ["Hola Lou", "Ricardo Machado"]
     },
     {
       category: 'sculpture',
-      artists: ["Leonor", "Beatriz", "Maria do Mar"]
+      artists: ["AkaCorleone", "André Saraiva", "Vhils", "Vitor Reis"]
     },
     {
       category: 'textile',
-      artists: ["Conceição", "Gelson", "Nate"]
+      artists: ["Claire Benn", "Maria Sigma"]
     }
   ];
 
@@ -48,14 +48,14 @@ export class HeaderComponent implements OnInit {
         let present = false;
         for (let navItem of this.navigationList) {
           if (navItem.category === item.category) {
-            navItem.artists.push(item.artist);
+            navItem.artists.push(item.Artist);
             present = true;
           }
         }
         if (!present) {
           this.navigationList.push({
             category: item.category,
-            artists: [item.artist],
+            artists: [item.Artist],
           });
         }
       }
