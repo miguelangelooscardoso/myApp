@@ -136,6 +136,41 @@ namespace myApp.API.DataAccess
             }
             return items;
         }
+
+        public Item GetItem(int id)
+        {
+            var item = new Item();
+            using (SqlConnection connection = new(dbconnection))
+            {
+                SqlCommand command = new()
+                {
+                    Connection = connection
+                };
+
+                string query = "SELECT * FROM Items WHERE ItemId=" + id + ";";
+                command.CommandText = query;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    item.Id = (int)reader["ItemId"];
+                    item.Title = (string)reader["Title"];
+                    item.Description = (string)reader["Description"];
+                    item.Price = (double)reader["Price"];
+                    item.Quantity = (int)reader["Quantity"];
+                    item.ImageName = (string)reader["ImageName"];
+
+                    var categoryid = (int)reader["CategoryId"];
+                    item.ItemCategory = GetItemCategory(categoryid);
+
+                    var offerid = (int)reader["OfferId"];
+                    item.Offer = GetOffer(offerid);
+                }
+            }
+            return item;
+        }
+
     }
 }
 

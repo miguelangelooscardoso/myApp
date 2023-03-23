@@ -4,17 +4,15 @@
         <!-- Profile Image of Product -->
         <div class="col-4 p-4">
             <div class="d-flex justify-content-center align-items-center">
-                <img src="../../assets/Sculpture/AkaCorleone/{{imageIndex}}.png" alt="" class="w-100">
+                <img src="../../assets/Items/{{item.id}}/{{imageIndex}}.jpeg" alt="" class="w-100">
             </div>
 
             <div class="image-thumbnails mt-4 d-flex justify-content-between align-items-center">
-                <img src="../../assets/Sculpture/AkaCorleone/1.png" alt="Thumbnail Image" (click)="imageIndex = 1">
-                <img src="../../assets/Sculpture/AkaCorleone/2.png" alt="Thumbnail Image" (click)="imageIndex = 2">
-                <img src="../../assets/Sculpture/AkaCorleone/3.png" alt="Thumbnail Image" (click)="imageIndex = 3">
-                <img src="../../assets/Sculpture/AkaCorleone/4.png" alt="Thumbnail Image" (click)="imageIndex = 4">
-                <img src="../../assets/Sculpture/AkaCorleone/5.png" alt="Thumbnail Image" (click)="imageIndex = 5">
-                <img src="../../assets/Sculpture/AkaCorleone/6.png" alt="Thumbnail Image" (click)="imageIndex = 6">
-                <img src="../../assets/Sculpture/AkaCorleone/7.png" alt="Thumbnail Image" (click)="imageIndex = 7">
+                <img src="../../assets/Items/{{item.id}}/1.jpeg" alt="Thumbnail Image" (click)="imageIndex = 1">
+                <img src="../../assets/Items/{{item.id}}/2.jpeg" alt="Thumbnail Image" (click)="imageIndex = 2">
+                <img src="../../assets/Items/{{item.id}}/3.jpeg" alt="Thumbnail Image" (click)="imageIndex = 3">
+                <img src="../../assets/Items/{{item.id}}/4.jpeg" alt="Thumbnail Image" (click)="imageIndex = 4">
+                <img src="../../assets/Items/{{item.id}}/5.jpeg" alt="Thumbnail Image" (click)="imageIndex = 5">
             </div>
         </div>
 
@@ -23,27 +21,28 @@
             <div class="card">
                 <div class="card-header">
                     <h2>
-                        Title i.e. Object Name
+                        {{item.title | titlecase}}
                     </h2>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title text-success">Final Price
-                        <span class="text-primary">-20%</span>
+                    <h1 class="card-title text-success">
+                        {{utilityService.applyDiscount(item.price,item.offer.discount)}}€
+                        <span class="text-primary">-{{item.offer.discount}}%</span>
                     </h1>
                     <h4 class="card-subtitle text-danger text-decoration-line-through">
-                        Original Price
+                        {{item.price}}€
                     </h4>
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle my-2 text-primary">11 products available.</h6>
+                    <h6 class="card-subtitle my-2 text-primary">{{item.quantity}} products available.</h6>
                     <div class="d-grip gap-2">
                         <button type="button" class="btn btn-outline-success">Add to Cart</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-text">Description</h5>
+                    <h5 class="card-text">{{item.description}}</h5>
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-action" *ngFor="let item of [1,1,1,1,1]">
+                        <li class="list-group-item list-group-item-action" *ngFor="let item of item.description.split('. ')">
                             {{item}}
                         </li>
 
@@ -59,7 +58,7 @@
                     Related Items
                 </h3>
                 <div class="col-12">
-                    <app-popular-items></app-popular-items>
+                    <app-popular-items [category]="item.itemCategory"></app-popular-items>
                 </div>
             </div>
         </div>
@@ -70,14 +69,14 @@
             <div class="col p-3">
                 <h3>We need your feedback</h3>
                 <h5 class="mt-4">Write Your feedback</h5>
-                <textarea class="w-75 p-2"></textarea>
+                <textarea class="w-75 p-2" [formControl]="feedbackControl"></textarea>
                 <div class="d-flex align-items-start">
-                    <button class="btn btn-outline-success mt-4 me-5" type="button">
+                    <button class="btn btn-outline-success mt-4 me-5" type="button" (click)="submitFeedback()">
                         Send feedback!
                     </button>
                     <div>
                         <h6 class="text-danger mt-4">Login first, before sending us your feedback.</h6>
-                        <h6 class="text-danger">Feedback cannot be null!</h6>
+                        <h6 class="text-danger" *ngIf="showError">Feedback cannot be null!</h6>
                         <h6 class="text-success">Feedback saved succefully!</h6>
                     </div>
 

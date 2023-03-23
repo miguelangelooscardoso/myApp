@@ -9,6 +9,7 @@ namespace myApp.API.DataAccess
         ItemCategory GetItemCategory(int id);
         Offer GetOffer(int id);
         List<Item> GetItems(string category, string artist, int count);
+        Item GetItem(int id);
     }
 }
 

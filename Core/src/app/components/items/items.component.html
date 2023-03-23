@@ -40,11 +40,9 @@
         <div class="list-view" *ngIf="view === 'list'">
             <div class="row mb-5" *ngFor="let item of items">
                 <div class="col">
-                    <app-item> [view]="'list'" [item]="item"</app-item>
+                    <app-item [view]="'list'" [item]="item"></app-item>
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>

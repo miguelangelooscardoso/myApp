@@ -6,11 +6,11 @@
         </div>
 
         <div class="overflow-hidden d-flex justify-content-center align-items-center">
-            <img src="../../assets/{{item.itemCategory.Artist}}/{{item.id}}/1.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
+            <img src="../../assets/Items/{{item.id}}/1.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
         </div>
 
         <div class="card-body">
-            <h5 class="card-title title"> {{item.itemCategory.Artist}} </h5>
+            <h5 class="card-title title"> {{item.itemCategory.category}} </h5>
             <p class="card-text description"> {{item.description}} </p>
             <h6 class="card-subtitle mb-3 text-primary"> {{item.quantity}} products are available. </h6>
         </div>
@@ -40,7 +40,7 @@
     <div class="card">
         <div class="row g-0">
             <div class="col-md-4 overflow-hidden d-flex justify-content-center align-items-center">
-                <img src="../../assets/{{item.itemCategory.Artist}}/{{item.id}}/1.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
+                <img src="../../assets/Items/{{item.id}}/1.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
             </div>
             <div class="col d-flex flex-column">
                 <div class="card-header text-center">
@@ -79,7 +79,7 @@
     <div class="card">
         <div class="row g-0">
             <div class="col-4 overflow-hidden d-flex justify-content-center align-items-center">
-                <img src="../../assets/{{item.itemCategory.Artist}}/{{item.id}}.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
+                <img src="../../assets/Items/{{item.id}}.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
             </div>
             <div class="col-8">
                 <div class="card-body">
@@ -106,7 +106,7 @@
 <div class="cart-item-view" *ngIf="view==='prevcartitem'">
     <div class="card text-center">
         <div class="overflow-hidden d-flex justify-content-center align-items-center">
-            <img src="../../assets/{{item.itemCategory.Artist}}/{{item.id}}/1.jpeg" class="card-img-top" alt="" OpenItemDetails [itemId]="item.id">
+            <img src="../../assets/Items/{{item.id}}/1.jpeg" class="card-img-top" alt="" OpenItemDetails [itemId]="item.id">
         </div>
         <div class="card-body">
             <h5 class="card-title title">{{item.title}}</h5>

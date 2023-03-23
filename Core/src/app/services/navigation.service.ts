@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams} from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Category } from '../models/category';
 import { map } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class NavigationService {
 
   constructor(private http: HttpClient) { }
 
-getCategoryList() {
+  getCategoryList() {
     let url = this.baseUrl + 'GetCategoryList';
     return this.http.get<any[]>(url).pipe(
       map((categories) =>
@@ -27,13 +27,18 @@ getCategoryList() {
     );
   }
 
- getItems(category: string, artist: string, count: number) {
+  getItems(category: string, artist: string, count: number) {
     return this.http.get<any[]>(this.baseUrl + 'GetItems', {
       params: new HttpParams()
         .set('category', category)
         .set('artist', artist)
         .set('count', count),
     });
+  }
+
+  getItem(id: number) {
+    let url = this.baseUrl + "GetItem/" + id;
+    return this.http.get(url);
   }
 }
 

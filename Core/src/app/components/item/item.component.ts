@@ -5,9 +5,9 @@ import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  styleUrls: ['./item.component.css'],
 })
-export class ItemComponent implements OnInit{
+export class ItemComponent implements OnInit {
   @Input() view: 'grid' | 'list' | 'currcartitem' | 'prevcartitem' = 'grid';
   @Input() item: Item = {
     id: 0,
@@ -28,10 +28,7 @@ export class ItemComponent implements OnInit{
     imageName: '',
   };
 
-  constructor(public utilityService: UtilityService) {
-  }
+  constructor(public utilityService: UtilityService) {}
 
-  ngOnInit(): void {
-  }
-  
+  ngOnInit(): void {}
 }
