@@ -11,7 +11,7 @@ export class HomeComponent {
     {
       backgroundImage: '/ceramics.jpeg',
       category: {
-        id: 1,
+        id: 0,
         category: 'ceramics',
         Artist: 'Nina Malterud',
       },
@@ -19,7 +19,7 @@ export class HomeComponent {
     {
       backgroundImage: '/glass.jpeg',
       category: {
-        id: 3,
+        id: 0,
         category: 'glass',
         Artist: 'Celia Dowson',
       },
@@ -27,7 +27,7 @@ export class HomeComponent {
     {
       backgroundImage: '/painting.jpeg',
       category: {
-        id: 6,
+        id: 0,
         category: 'painting',
         Artist: 'Hola Lou',
       },
@@ -35,7 +35,7 @@ export class HomeComponent {
     {
       backgroundImage: '/sculpture.jpeg',
       category: {
-        id: 10,
+        id: 0,
         category: 'sculpture',
         Artist: 'Vhils',
       },
@@ -43,7 +43,7 @@ export class HomeComponent {
     {
       backgroundImage: '/textile.jpeg',
       category: {
-        id: 12,
+        id: 0,
         category: 'textile',
         Artist: 'Claire Benn',
       },

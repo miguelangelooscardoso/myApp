@@ -28,7 +28,8 @@ export class ItemComponent implements OnInit{
     imageName: '',
   };
 
-  constructor(public utilityService: UtilityService) {}
+  constructor(public utilityService: UtilityService) {
+  }
 
   ngOnInit(): void {
   }
