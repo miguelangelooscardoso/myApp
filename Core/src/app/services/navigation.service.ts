@@ -19,7 +19,7 @@ export class NavigationService {
           let mappedCategory: Category = {
             id: category.id,
             category: category.category,
-            Artist: category.Artist, // ???
+            artistCategory: category.artistCategory, // ???
           };
           return mappedCategory;
         })

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Item } from 'src/app/models/item';
 import { UtilityService } from 'src/app/services/utility.service';
 
+
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -18,7 +19,7 @@ export class ItemComponent implements OnInit {
     itemCategory: {
       id: 1,
       category: '',
-      Artist: '',
+      artistCategory: '',
     },
     offer: {
       id: 1,

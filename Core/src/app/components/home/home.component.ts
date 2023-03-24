@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PopularItem } from 'src/app/models/popular-item';
 
 @Component({
@@ -6,46 +6,46 @@ import { PopularItem } from 'src/app/models/popular-item';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   popularItems: PopularItem[] = [
     {
       backgroundImage: '/ceramics.jpeg',
       category: {
-        id: 0,
+        id: 1,
         category: 'ceramics',
-        Artist: 'Nina Malterud',
+        artistCategory: 'Nina Malterud',
       },
     },
     {
       backgroundImage: '/glass.jpeg',
       category: {
-        id: 0,
+        id: 3,
         category: 'glass',
-        Artist: 'Celia Dowson',
+        artistCategory: 'Celia Dowson',
       },
     },
     {
       backgroundImage: '/painting.jpeg',
       category: {
-        id: 0,
+        id: 6,
         category: 'painting',
-        Artist: 'Hola Lou',
+        artistCategory: 'Hola Lou',
       },
     },
     {
       backgroundImage: '/sculpture.jpeg',
       category: {
-        id: 0,
+        id: 10,
         category: 'sculpture',
-        Artist: 'Vhils',
+        artistCategory: 'Vhils',
       },
     },
     {
       backgroundImage: '/textile.jpeg',
       category: {
-        id: 0,
+        id: 12,
         category: 'textile',
-        Artist: 'Claire Benn',
+        artistCategory: 'Claire Benn',
       },
     },
   ];

@@ -48,14 +48,14 @@ export class HeaderComponent implements OnInit {
         let present = false;
         for (let navItem of this.navigationList) {
           if (navItem.category === item.category) {
-            navItem.artists.push(item.Artist);
+            navItem.artists.push(item.artistCategory);
             present = true;
           }
         }
         if (!present) {
           this.navigationList.push({
             category: item.category,
-            artists: [item.Artist],
+            artists: [item.artistCategory],
           });
         }
       }

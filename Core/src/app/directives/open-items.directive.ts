@@ -9,14 +9,14 @@ export class OpenItemsDirective {
   @Input() category: Category = {
     id:0,
     category: '',
-    Artist: '',
+    artistCategory: '',
   };
 
   @HostListener('click') openItems() {
     this.router.navigate(['/items'], {
       queryParams:{
         category: this.category.category,
-        artist: this.category.Artist,
+        artist: this.category.artistCategory,
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { Item } from 'src/app/models/item';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -8,13 +8,12 @@ import { NavigationService } from 'src/app/services/navigation.service';
   templateUrl: './popular-items.component.html',
   styleUrls: ['./popular-items.component.css']
 })
-export class PopularItemsComponent {
+export class PopularItemsComponent implements OnInit{
   @Input() category: Category = {
     id: 0,
     category: '',
-    Artist: '',
+    artistCategory: '',
   };
-  // number of popular items being displayed
   @Input() count: number = 3;
   items: Item[] = [];
 
@@ -24,7 +23,7 @@ export class PopularItemsComponent {
     this.navigationService
     .getItems(
       this.category.category,
-      this.category.Artist,
+      this.category.artistCategory,
       this.count
     )
     .subscribe((res: any[]) => {

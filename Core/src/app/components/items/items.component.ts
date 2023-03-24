@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from 'src/app/models/item';
 import { NavigationService } from 'src/app/services/navigation.service';
@@ -9,7 +9,7 @@ import { UtilityService } from 'src/app/services/utility.service';
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css']
 })
-export class ItemsComponent {
+export class ItemsComponent implements OnInit{
   view: 'grid' | 'list' = 'list';
   sortby: 'default' | 'htl' | 'lth' = 'default';
   items: Item[] =[];

@@ -13,7 +13,7 @@
                     <ng-container *ngFor="let item of navigationList; let i = index;">
                         <li class="text-center fw-bold">{{item.category | titlecase}}</li>
                         <li *ngFor="let artist of item.artists" [style.cursor] = "'pointer'">
-                            <a class="dropdown-item" OpenItems [category]="{id: 0, 'category': item.category, 'Artist': artist}"> 
+                            <a class="dropdown-item" OpenItems [category]="{id: 0, 'category': item.category, 'artistCategory': artist}"> 
                                 {{artist | titlecase}}
                             </a>
                         </li>
