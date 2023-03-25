@@ -32,13 +32,23 @@ export class ItemDetailsComponent implements OnInit{
     });
   }
 
-  submitFeedback(){
-    let feedback = this.feedbackControl.value;
+  // submitFeedback(){
+  //   let feedback = this.feedbackControl.value;
 
-    if(feedback === '' || feedback === null){
-      this.showError = true;
-      return;
-    }
-  }
+  //   if(feedback === '' || feedback === null){
+  //     this.showError = true;
+  //     return;
+  //   }
+
+  //   let userid = this.utilityService.getUser().id;
+  //   let itemid = this.item.id;
+
+  //   this.navigationService
+  //     .submitFeedback(userid, itemid, feedback)
+  //     .subscribe((res) => {
+  //       this.feedbackSaved = true;
+  //       this.feedbackControl.setValue('');
+  //     });
+  // }
 
 }

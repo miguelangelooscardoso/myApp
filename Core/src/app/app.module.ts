@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {ReactiveFormsModule,FormsModule} from '@angular/forms';
+import { ReactiveFormsModule,FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ItemComponent } from './components/item/item.component';
@@ -18,6 +18,7 @@ import { OpenItemDetailsDirective } from './directives/open-item-details.directi
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,15 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('user');
+        },
+        allowedDomains: ['localhost:7275'],
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

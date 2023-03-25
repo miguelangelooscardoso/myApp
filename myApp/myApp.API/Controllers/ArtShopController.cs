@@ -43,6 +43,37 @@ namespace myApp.API.Controllers
             var result = dataAccess.GetItem(id);
             return Ok(result);
         }
+
+        [HttpPost("RegisterUser")]
+        public IActionResult RegisterUser([FromBody] User user)
+        {
+            user.CreatedAt = DateTime.Now.ToString(DateFormat);
+            user.ModifiedAt = DateTime.Now.ToString(DateFormat);
+
+            var result = dataAccess.InsertUser(user);
+
+            string? message;
+            if (result) message = "inserted";
+            else message = "email not available";
+            return Ok(message);
+        }
+
+        [HttpPost("LoginUser")]
+        public IActionResult LoginUser([FromBody] User user)
+        {
+            var token = dataAccess.IsUserPresent(user.Email, user.Password);
+            if (token == "") token = "invalid";
+            return Ok(token);
+        }
+
+        //[HttpPost("InsertFeedback")]
+        //public IActionResult InsertFeedback([FromBody] Feedback feedback)
+        //{
+        //    feedback.CreatedAt = DateTime.Now.ToString(DateFormat);
+        //    dataAccess.InsertFeedback(feedback);
+        //    return Ok("inserted");
+        //}
     }
 }
+
 

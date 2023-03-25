@@ -1,6 +1,11 @@
 <div class="my-container mx-auto border border-dark">
     <div class="row g-0">
-
+        <div>  
+            category: {{item.itemCategory.category}}
+            artist: {{item.itemCategory.artistCategory}}
+            id: {{item.id}}
+        </div>
+        
         <!-- Profile Image of Product -->
         <div class="col-4 p-4">
             <div class="d-flex justify-content-center align-items-center">
@@ -71,11 +76,11 @@
                 <h5 class="mt-4">Write Your feedback</h5>
                 <textarea class="w-75 p-2" [formControl]="feedbackControl"></textarea>
                 <div class="d-flex align-items-start">
-                    <button class="btn btn-outline-success mt-4 me-5" type="button" (click)="submitFeedback()">
+                    <!-- <button class="btn btn-outline-success mt-4 me-5" type="button" (click)="submitFeedback()">
                         Send feedback!
-                    </button>
+                    </button> -->
                     <div>
-                        <h6 class="text-danger mt-4">Login first, before sending us your feedback.</h6>
+                        <h6 class="text-danger mt-4" *ngIf="!utilityService.isLoggedIn()">Login first, before sending us your feedback.</h6>
                         <h6 class="text-danger" *ngIf="showError">Feedback cannot be null!</h6>
                         <h6 class="text-success" *ngIf="feedbackSaved">Feedback saved succefully!</h6>
                     </div>

@@ -126,6 +126,7 @@ CREATE TABLE [dbo].[Payments](
 GO
 
 -- Creates table ItemCategories
+-- PK_ItemCategories was not starting with a capital letter
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -134,7 +135,7 @@ CREATE TABLE [dbo].[ItemCategories](
 	[CategoryId] [int] IDENTITY(1,1) NOT NULL,
 	[Category] [nvarchar](50) NOT NULL,
 	[Artist] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_itemCategories] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_ItemCategories] PRIMARY KEY CLUSTERED 
 (
 	[CategoryId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -142,6 +143,7 @@ CREATE TABLE [dbo].[ItemCategories](
 GO
 
 -- Creates table Items
+-- PK_Item was not with a capital letter
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -155,7 +157,7 @@ CREATE TABLE [dbo].[Items](
 	[Price] [float] NOT NULL,
 	[Quantity] [int] NOT NULL,
 	[ImageName] [nvarchar](max) NOT NULL,
- CONSTRAINT [PK_item] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED 
 (
 	[ItemId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -167,10 +169,10 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Feedback](
+CREATE TABLE [dbo].[Feedbacks](
 	[FeedbackId] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [int] NOT NULL,
-	[itemId] [int] NOT NULL,
+	[ItemId] [int] NOT NULL,
 	[Feedback] [nvarchar](max) NOT NULL,
 	[CreatedAt] [nvarchar](100) NOT NULL,
  CONSTRAINT [PK_Reviews] PRIMARY KEY CLUSTERED 
@@ -234,13 +236,15 @@ REFERENCES [dbo].[Offers] ([OfferId])
 GO
 ALTER TABLE [dbo].[Items] CHECK CONSTRAINT [FK_Item_Offers]
 GO
-ALTER TABLE [dbo].[Items]  WITH CHECK ADD  CONSTRAINT [FK_Item_itemCategories] FOREIGN KEY([CategoryId])
+-- FK_Item_ItemCategories was not in capital letters
+ALTER TABLE [dbo].[Items]  WITH CHECK ADD  CONSTRAINT [FK_Item_ItemCategories] FOREIGN KEY([CategoryId])
 REFERENCES [dbo].[ItemCategories] ([CategoryId])
 GO
 ALTER TABLE [dbo].[Items] CHECK CONSTRAINT [FK_Item_ItemCategories]
 GO
-ALTER TABLE [dbo].[Feedback]  WITH CHECK ADD  CONSTRAINT [FK_Feedback_Users] FOREIGN KEY([UserId])
+-- Feedbacks were in the singular
+ALTER TABLE [dbo].[Feedbacks]  WITH CHECK ADD  CONSTRAINT [FK_Feedbacks_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([UserId])
 GO
-ALTER TABLE [dbo].[Feedback] CHECK CONSTRAINT [FK_Feedback_Users]
+ALTER TABLE [dbo].[Feedbacks] CHECK CONSTRAINT [FK_Feedbacks_Users]
 GO

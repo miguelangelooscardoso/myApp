@@ -1,4 +1,7 @@
-﻿using myApp.API.DataAccess;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using myApp.API.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,21 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader()
                 .AllowCredentials();
         });
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
+{
+    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "localhost",
+        ValidAudience = "localhost",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MNU66iBl3T5rh6H52i69")),
+        ClockSkew = TimeSpan.Zero
+    };
 });
 
 // Add services to the container.
