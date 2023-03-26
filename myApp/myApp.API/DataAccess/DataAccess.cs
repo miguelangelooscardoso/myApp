@@ -278,24 +278,93 @@ namespace myApp.API.DataAccess
             return "";
         }
 
-        //public void InsertFeedback(Feedback feedback)
-        //{
-        //    using SqlConnection connection = new(dbconnection);
-        //    SqlCommand command = new()
-        //    {
-        //        Connection = connection
-        //    };
+        public void InsertFeedback(Feedback feedback)
+        {
+            using SqlConnection connection = new(dbconnection);
+            SqlCommand command = new()
+            {
+                Connection = connection
+            };
 
-        //    string query = "INSERT INTO Feedbacks (UserId, ItemId, Feedback, CreatedAt) VALUES (@uid, @pid, @rv, @cat);";
-        //    command.CommandText = query;
-        //    command.Parameters.Add("@uid", System.Data.SqlDbType.Int).Value = feedback.User.Id;
-        //    command.Parameters.Add("@pid", System.Data.SqlDbType.Int).Value = feedback.Item.Id;
-        //    command.Parameters.Add("@rv", System.Data.SqlDbType.NVarChar).Value = feedback.Value;
-        //    command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = feedback.CreatedAt;
+            string query = "INSERT INTO Feedbacks (UserId, ItemId, Feedback, CreatedAt) VALUES (@uid, @pid, @rv, @cat);";
+            command.CommandText = query;
+            command.Parameters.Add("@uid", System.Data.SqlDbType.Int).Value = feedback.User.Id;
+            command.Parameters.Add("@pid", System.Data.SqlDbType.Int).Value = feedback.Item.Id;
+            command.Parameters.Add("@rv", System.Data.SqlDbType.NVarChar).Value = feedback.Value;
+            command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = feedback.CreatedAt;
 
-        //    connection.Open();
-        //    command.ExecuteNonQuery();
-        //}
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+
+        public User GetUser(int id)
+        {
+            var user = new User();
+            using (SqlConnection connection = new(dbconnection))
+            {
+                SqlCommand command = new()
+                {
+                    Connection = connection
+                };
+
+                string query = "SELECT * FROM Users WHERE UserId=" + id + ";";
+                command.CommandText = query;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    user.Id = (int)reader["UserId"];
+                    user.FirstName = (string)reader["FirstName"];
+                    user.LastName = (string)reader["LastName"];
+                    user.Email = (string)reader["Email"];
+                    user.Address = (string)reader["Address"];
+                    user.Mobile = (string)reader["Mobile"];
+                    user.Password = (string)reader["Password"];
+                    user.CreatedAt = (string)reader["CreatedAt"];
+                    user.ModifiedAt = (string)reader["ModifiedAt"];
+                }
+            }
+            return user;
+        }
+
+        public List<Feedback> GetItemFeedbacks(int itemId)
+        {
+            var feedbacks = new List<Feedback>();
+            using (SqlConnection connection = new(dbconnection))
+            {
+                SqlCommand command = new()
+                {
+                    Connection = connection
+                };
+
+                string query = "SELECT * FROM Feedbacks WHERE ItemId=" + itemId + ";";
+                command.CommandText = query;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var feedback = new Feedback()
+                    {
+                        Id = (int)reader["FeedbackID"],
+                        Value = (string)reader["Feedback"],
+                        CreatedAt = (string)reader["CreatedAt"]
+                    };
+
+                    var userid = (int)reader["UserId"];
+                    feedback.User = GetUser(userid);
+
+                    var itemid = (int)reader["ItemId"];
+                    feedback.Item = GetItem(itemid);
+
+                    feedbacks.Add(feedback);
+                }
+            }
+            return feedbacks;
+        }
+
+
     }
 
 }

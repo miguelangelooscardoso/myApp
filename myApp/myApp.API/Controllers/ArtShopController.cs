@@ -66,13 +66,20 @@ namespace myApp.API.Controllers
             return Ok(token);
         }
 
-        //[HttpPost("InsertFeedback")]
-        //public IActionResult InsertFeedback([FromBody] Feedback feedback)
-        //{
-        //    feedback.CreatedAt = DateTime.Now.ToString(DateFormat);
-        //    dataAccess.InsertFeedback(feedback);
-        //    return Ok("inserted");
-        //}
+        [HttpPost("InsertFeedback")]
+        public IActionResult InsertFeedback([FromBody] Feedback feedback)
+        {
+            feedback.CreatedAt = DateTime.Now.ToString(DateFormat);
+            dataAccess.InsertFeedback(feedback);
+            return Ok("inserted");
+        }
+
+        [HttpGet("GetItemFeedbacks/{ItemId}")]
+        public IActionResult GetItemFeedbacks(int itemId)
+        {
+            var result = dataAccess.GetItemFeedbacks(itemId);
+            return Ok(result);
+        }
     }
 }
 

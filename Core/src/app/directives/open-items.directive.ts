@@ -3,24 +3,23 @@ import { Router } from '@angular/router';
 import { Category } from '../models/category';
 
 @Directive({
-  selector: '[OpenItems]'
+  selector: '[OpenItems]',
 })
 export class OpenItemsDirective {
   @Input() category: Category = {
-    id:0,
+    id: 0,
     category: '',
     artistCategory: '',
   };
 
   @HostListener('click') openItems() {
     this.router.navigate(['/items'], {
-      queryParams:{
+      queryParams: {
         category: this.category.category,
         artist: this.category.artistCategory,
       },
     });
   }
 
-  constructor(private router: Router) { }
-
+  constructor(private router: Router) {}
 }

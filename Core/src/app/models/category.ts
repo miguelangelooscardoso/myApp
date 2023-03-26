@@ -1,5 +1,5 @@
 export interface Category {
     id: number;
     category: string;
-    artistCategory: string; //???
+    artistCategory: string; 
 }

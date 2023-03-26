@@ -12,7 +12,9 @@ namespace myApp.API.DataAccess
         Item GetItem(int id);
         bool InsertUser(User user);
         string IsUserPresent(string email, string password);
-        //void InsertFeedback(Feedback feedback);
+        void InsertFeedback(Feedback feedback);
+        List<Feedback> GetItemFeedbacks(int itemId);
+        User GetUser(int id);
     }
 }
 

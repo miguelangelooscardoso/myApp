@@ -11,32 +11,33 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  navigationList: NavigationItem[] = [];
   @ViewChild('modalTitle') modalTitle!: ElementRef;
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
 
-  navigationList: NavigationItem[] = [
-    {
-      category: 'ceramics',
-      artists: ["Nina Malterud", "Maria Kristofersson"]
-    },
-    {
-      category: 'glass',
-      artists: ["Celia Dowson", "Edmond Byrne", "Michéle Oberdieck"]
-    },
-    {
-      category: 'painting',
-      artists: ["Hola Lou", "Ricardo Machado"]
-    },
-    {
-      category: 'sculpture',
-      artists: ["AkaCorleone", "André Saraiva", "Vhils", "Vitor Reis"]
-    },
-    {
-      category: 'textile',
-      artists: ["Claire Benn", "Maria Sigma"]
-    }
-  ];
+  // navigationList: NavigationItem[] = [
+  //   {
+  //     category: 'ceramics',
+  //     artists: ["Nina Malterud", "Maria Kristofersson"]
+  //   },
+  //   {
+  //     category: 'glass',
+  //     artists: ["Celia Dowson", "Edmond Byrne", "Michéle Oberdieck"]
+  //   },
+  //   {
+  //     category: 'painting',
+  //     artists: ["Hola Lou", "Ricardo Machado"]
+  //   },
+  //   {
+  //     category: 'sculpture',
+  //     artists: ["AkaCorleone", "André Saraiva", "Vhils", "Vitor Reis"]
+  //   },
+  //   {
+  //     category: 'textile',
+  //     artists: ["Claire Benn", "Maria Sigma"]
+  //   }
+  // ];
 
   constructor(private navigationService: NavigationService) {
   }

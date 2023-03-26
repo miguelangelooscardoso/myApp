@@ -27,7 +27,7 @@ export class NavigationService {
       )
     );
   }
-
+  
   getItems(category: string, artist: string, count: number) {
     return this.http.get<any[]>(this.baseUrl + 'GetItems', {
       params: new HttpParams()
@@ -56,19 +56,19 @@ export class NavigationService {
     );
   }
 
-  // submitFeedback(userid: number, itemid: number, feedback: string) {
-  //   let obj: any = {
-  //     User: {
-  //       Id: userid,
-  //     },
-  //     Item: {
-  //       Id: itemid,
-  //     },
-  //     Value: feedback
-  //   };
+  submitFeedback(userid: number, itemid: number, feedback: string) {
+    let obj: any = {
+      User: {
+        Id: userid,
+      },
+      Item: {
+        Id: itemid,
+      },
+      Value: feedback
+    };
 
-  //   let url = this.baseUrl + "InsertFeedback";
-  //   return this.http.post(url, obj, { responseType: 'text' });
-  // }
+    let url = this.baseUrl + "InsertFeedback";
+    return this.http.post(url, obj, { responseType: 'text' });
+  }
 }
 
