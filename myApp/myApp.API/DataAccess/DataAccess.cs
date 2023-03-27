@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.IdentityModel.Tokens;
 using myApp.API.Models;
 
@@ -347,7 +348,7 @@ namespace myApp.API.DataAccess
                 {
                     var feedback = new Feedback()
                     {
-                        Id = (int)reader["FeedbackID"],
+                        Id = (int)reader["FeedbackId"],
                         Value = (string)reader["Feedback"],
                         CreatedAt = (string)reader["CreatedAt"]
                     };
@@ -363,6 +364,7 @@ namespace myApp.API.DataAccess
             }
             return feedbacks;
         }
+
 
 
     }

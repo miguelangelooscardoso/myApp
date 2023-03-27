@@ -12,12 +12,13 @@
                 <ul class="dropdown-menu fs-5">
                     <ng-container *ngFor="let item of navigationList; let i = index;">
                         <li class="text-center fw-bold">{{item.category | titlecase}}</li>
-                        <li *ngFor="let artist of item.artists" [style.cursor] = "'pointer'">
-                            <a class="dropdown-item" OpenItems [category]="{id: 0, 'category': item.category, 'artistCategory': artist}"> 
+                        <li *ngFor="let artist of item.artists" [style.cursor]="'pointer'">
+                            <a class="dropdown-item" OpenItems
+                               [category]="{id: 0, 'category': item.category, 'artistCategory': artist}">
                                 {{artist | titlecase}}
                             </a>
                         </li>
-                        <li *ngIf="i!==navigationList.length - 1">
+                        <li *ngIf="i !== navigationList.length - 1">
                             <hr class="dropdown-divider">
                         </li>
                     </ng-container>

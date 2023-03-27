@@ -74,7 +74,7 @@ namespace myApp.API.Controllers
             return Ok("inserted");
         }
 
-        [HttpGet("GetItemFeedbacks/{ItemId}")]
+        [HttpGet("GetItemFeedbacks/{itemId}")]
         public IActionResult GetItemFeedbacks(int itemId)
         {
             var result = dataAccess.GetItemFeedbacks(itemId);
