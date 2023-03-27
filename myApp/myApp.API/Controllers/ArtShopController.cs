@@ -80,7 +80,29 @@ namespace myApp.API.Controllers
             var result = dataAccess.GetItemFeedbacks(itemId);
             return Ok(result);
         }
+
+        [HttpPost("InsertCartItem/{userId}/{itemId}")]
+        public IActionResult InsertCartItem(int userid, int itemid)
+        {
+            var result = dataAccess.InsertCartItem(userid, itemid);
+            return Ok(result ? "insert" : "not inserted");
+        }
+
+        [HttpGet("GetActiveCartOfUser/{id}")]
+        public IActionResult GetActiveCartOfUser(int id)
+        {
+            var result = dataAccess.GetActiveCartOfUser(id);
+            return Ok(result);
+        }
+
+        [HttpGet("GetAllPreviousCartsOfUser/{id}")]
+        public IActionResult GetAllPreviousCartsOfUser(int id)
+        {
+            var result = dataAccess.GetAllPreviousCartsOfUser(id);
+            return Ok(result);
+        }
     }
 }
+
 
 

@@ -70,5 +70,25 @@ export class NavigationService {
     let url = this.baseUrl + "InsertFeedback";
     return this.http.post(url, obj, { responseType: 'text' });
   }
+
+  getAllFeedbacksOfItem(itemId: number) {
+    let url = this.baseUrl + 'GetItemFeedbacks/' + itemId;
+    return this.http.get(url);
+  }
+
+  addToCart(userid: number, itemid: number){
+    let url = this.baseUrl + 'InsertCartItem/' + userid + '/' + itemid;
+    return this.http.post(url, null, {responseType: 'text'});
+  }
+
+  getActiveCartOfUser(userid: number) {
+    let url = this.baseUrl + 'GetActiveCartOfUser/' + userid;
+    return this.http.get(url);
+  }
+
+  getAllPreviousCarts(userid: number) {
+    let url = this.baseUrl + 'GetAllPreviousCartsOfUser/' + userid;
+    return this.http.get(url);
+  }
 }
 

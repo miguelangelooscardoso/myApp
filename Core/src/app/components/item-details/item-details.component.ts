@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Feedback } from 'src/app/models/feedback';
 import { Item } from 'src/app/models/item';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -16,6 +17,7 @@ export class ItemDetailsComponent implements OnInit{
   feedbackControl = new FormControl('');
   showError = false;
   feedbackSaved = false;
+  otherFeedbacks: Feedback[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -28,6 +30,7 @@ export class ItemDetailsComponent implements OnInit{
       let id = params.id;
       this.navigationService.getItem(id).subscribe((res: any) => {
         this.item = res;
+        this.fetchAllFeedbacks();
       });
     });
   }
@@ -47,7 +50,19 @@ export class ItemDetailsComponent implements OnInit{
       .submitFeedback(userid, itemid, feedback)
       .subscribe((res) => {
         this.feedbackSaved = true;
+        this.fetchAllFeedbacks();
         this.feedbackControl.setValue('');
+      });
+  }
+
+  fetchAllFeedbacks(){
+    this.otherFeedbacks = [];
+    this.navigationService
+      .getAllFeedbacksOfItem(this.item.id)
+      .subscribe((res: any) => {
+        for (let feedback of res){
+          this.otherFeedbacks.push(feedback);
+        }
       });
   }
 

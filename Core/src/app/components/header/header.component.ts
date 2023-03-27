@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Type, ViewChild, ViewContainerRef } from
 import { Category } from 'src/app/models/category';
 import { NavigationItem } from 'src/app/models/navigation-item';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { UtilityService } from 'src/app/services/utility.service';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('modalTitle') modalTitle!: ElementRef;
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
+  cartItems: number = 0;
 
   // navigationList: NavigationItem[] = [
   //   {
@@ -39,7 +41,10 @@ export class HeaderComponent implements OnInit {
   //   }
   // ];
 
-  constructor(private navigationService: NavigationService) {
+  constructor(
+    private navigationService: NavigationService,
+    public utilityService: UtilityService
+    ) {
   }
 
   ngOnInit(): void {
@@ -61,8 +66,23 @@ export class HeaderComponent implements OnInit {
         }
       }
     });
+
+    // Cart
+    if (this.utilityService.isLoggedIn()) {
+      this.navigationService
+        .getActiveCartOfUser(this.utilityService.getUser().id)
+        .subscribe((res: any) => {
+          this.cartItems = res.cartItems.length;
+        });
+    }
+
+    this.utilityService.changeCart.subscribe((res: any) => {
+      if (parseInt(res) === 0) this.cartItems = 0;
+      else this.cartItems += parseInt(res);
+    });
   }
 
+  // Modal inside OnInit
   openModal(name: string) {
     this.container.clear()
 
@@ -79,3 +99,6 @@ export class HeaderComponent implements OnInit {
     this.container.createComponent(componentType);
   }
 }
+
+
+

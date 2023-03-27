@@ -41,7 +41,10 @@
                 <div class="card-body">
                     <h6 class="card-subtitle my-2 text-primary">{{item.quantity}} products available.</h6>
                     <div class="d-grip gap-2">
-                        <button type="button" class="btn btn-outline-success">Add to Cart</button>
+                        <!-- allows adding to car only if is LoggedIn -->
+                        <button type="button" class="btn btn-outline-success" [disabled]="!utilityService.isLoggedIn()" (click)="this.utilityService.addToCart(item)">Add to Cart
+                            <span *ngIf="utilityService.isLoggedIn()">(Login First)</span>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -95,18 +98,19 @@
             <!-- Other Review -->
             <div class="col p-3">
                 <h3>Other Feedbacks</h3>
-                <h6 *ngIf="1">No feeback yet!</h6>
-                <div class="card mt-3" *ngFor="let feedback of [1,2,3]">
+                <h6 *ngIf="otherFeedbacks.length === 0">No feeback yet!</h6>
+                <div class="card mt-3" *ngFor="let feedback of otherFeedbacks">
                     <div class="card-header d-flex justify-content-between">
                         <div class="card-text">
-                            Ruth Perez
+                            {{feedback.user.firstName}}
+                            {{feedback.user.lastName}}
                         </div>
                         <div class="card-text fst-italic">
-                            Reviewed On: <span class="fw-bold">{{"14 Mar 2023" | date:"dd-MM-yyyy"}}</span>
+                            Reviewed On: <span class="fw-bold">{{feedback.createdAt| date:"dd-MM-yyyy"}}</span>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="card-text">Feedback</div>
+                        <div class="card-text">{{feedback.value}}</div>
                     </div>
                 </div>
             </div>

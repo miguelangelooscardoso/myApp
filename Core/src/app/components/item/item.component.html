@@ -27,8 +27,9 @@
         </div>
 
         <div class="card-footer text-muted d-grid gap-2">
-            <button type="button" class="btn btn-outline-success">
+            <button type="button" class="btn btn-outline-success" [disabled]="!utilityService.isLoggedIn()" (click)="this.utilityService.addToCart(item)">
                 Add to Cart
+                <span *ngIf="!utilityService.isLoggedIn()">(Login First)</span>
             </button>
         </div>
 
@@ -65,8 +66,9 @@
                 </div>
 
                 <div class="card-footer text-muted d-grid gap-2">
-                    <button type="button" class="btn btn-outline-success">
+                    <button type="button" class="btn btn-outline-success" [disabled]="!utilityService.isLoggedIn()" (click)="this.utilityService.addToCart(item)">
                         Add to Cart
+                        <span *ngIf="!utilityService.isLoggedIn()">(Login First)</span>
                     </button>
                 </div>
             </div>
@@ -79,7 +81,7 @@
     <div class="card">
         <div class="row g-0">
             <div class="col-4 overflow-hidden d-flex justify-content-center align-items-center">
-                <img src="../../assets/Items/{{item.id}}.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
+                <img src="../../assets/Items/{{item.id}}/1.jpeg" class="img-fluid rounded-start" alt="Item Image" OpenItemDetails [itemId]="item.id">
             </div>
             <div class="col-8">
                 <div class="card-body">
@@ -89,17 +91,13 @@
                         <span class="text-primary"> -{{item.offer.discount}}% </span>
                     </h5>
                     <h6 class="card-subtitle text-danger text-decoration-line-through">{{ item.price }}€</h6>
-                    <span class="text-primary">{{item.description}} products are available.</span>
                 </div>
                 <div class="card-footer text-muted d-grid gap-2">
                     <button class="btn btn-outline-danger" type="button">Remove from cart</button>
                 </div>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <!-- Previous Cart Item View -->
