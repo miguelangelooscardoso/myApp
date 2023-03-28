@@ -6,6 +6,7 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { ItemsComponent } from './components/items/items.component';
 import { OrderComponent } from './components/order/order.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'item-details', component: ItemDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'orders', component: OrderComponent },
+  { path: 'track', component: OrderTrackingComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

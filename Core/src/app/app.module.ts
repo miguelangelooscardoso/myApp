@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     OpenItemDetailsDirective,
     RegisterComponent,
     LoginComponent,
+    OrderTrackingComponent,
   ],
   imports: [
     BrowserModule,
