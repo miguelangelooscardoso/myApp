@@ -5,23 +5,23 @@
             <tbody>
                 <tr>
                     <td>Total Items</td>
-                    <td class="fs-5 fw-bold">5</td>
+                    <td class="fs-5 fw-bold">{{usersCart.cartItems.length}}</td>
                 </tr>
                 <tr>
                     <td>Total Price</td>
-                    <td class="fs-5 fw-bold text-danger">50.00€</td>
+                    <td class="fs-5 fw-bold text-danger">{{usersPaymentInfo.totalAmount}}€</td>
                 </tr>
                 <tr>
                     <td>Shipping Charges</td>
-                    <td class="fs-5 fw-bold text-danger">2.00€</td>
+                    <td class="fs-5 fw-bold text-danger">{{usersPaymentInfo.shippingCharges}}€</td>
                 </tr>
                 <tr>
                     <td>Discount</td>
-                    <td class="fs-5 fw-bold text-success">5.00€</td>
+                    <td class="fs-5 fw-bold text-success">{{usersPaymentInfo.amountReduced}}€</td>
                 </tr>
                 <tr>
                     <td>You have to Pay:</td>
-                    <td class="fs-5 fw-bold text-sucess">98.00€</td>
+                    <td class="fs-5 fw-bold text-sucess">{{usersPaymentInfo.amountPaid}}€</td>
                 </tr>
             </tbody>
         </table>
@@ -32,10 +32,11 @@
         <h4 class="w-25  boder border-secondary text-center py-2 my-rounded-corner">Payment Method</h4>
         <div class="d-flex  justify-content-center align-items-center">
             <h5 class="me-4">Select method</h5>
-            <select class="form-select w-25" [formControl="selectedPaymentMethod"]>
-                <option value="0">Open menu:</option>
-                <option *ngFor="let paymentMethod of [1,2,3]" value="{{paymentMethod}}">
-                    option
+            <select class="form-select w-25" [formControl]="selectedPaymentMethod">
+                <option value="0">Open this select menu</option>
+                <option *ngFor="let paymentMethod of paymentMethods" value="{{paymentMethod.id}}">
+                    {{paymentMethod.type}}
+                    <span *ngIf="paymentMethod.provider !== ''">{{" - "+paymentMethod.provider}}</span>
                 </option>
             </select>
         </div>
@@ -48,15 +49,15 @@
                 <thead>
                     <tr>
                         <td>You have to Pay</td>
-                        <td> 98.00€ </td>
+                        <td> {{usersPaymentInfo.amountPaid}}€ </td>
                     </tr>
                     <tr>
                         <td>Payment Method</td>
-                        <td> PayPal </td>
+                        <td> {{this.getPaymentMethod(selectedPaymentMethodName)}} </td>
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td *ngIf="true"> My address will go here! <a routerLink="/account-settings">Change</a> </td>
+                        <td *ngIf="true"> {{address}} <a routerLink="/account-settings">Change</a> </td>
                         <td *ngIf="true">
                             You have not entered address.
                             <a routerLink="/account-settings">Please enter that.</a>
@@ -73,16 +74,16 @@
             </table>
             
             <div class="d-grid w-50">
-                <button type="button" class="btn btn-outline-success mb-4">
+                <button type="button" class="btn btn-outline-success mb-4" (click)="placeOrder()">
                     Pay
                 </button>
             </div>
 
             <div class="processing">
-                <div class="spinner-border me-4" role="status" *ngIf="true">
+                <div class="spinner-border me-4" role="status" *ngIf="displaySpinner">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <h6 class="m-0">error</h6>
+                <h6 class="m-0"> {{message}} </h6>
             </div>
         </div>
     </section>
