@@ -58,13 +58,13 @@ namespace myApp.API.Controllers
             return Ok(message);
         }
 
-        [HttpPost("LoginUser")]
-        public IActionResult LoginUser([FromBody] User user)
-        {
-            var token = dataAccess.IsUserPresent(user.Email, user.Password);
-            if (token == "") token = "invalid";
-            return Ok(token);
-        }
+        //[HttpPost("LoginUser")]
+        //public IActionResult LoginUser([FromBody] User user)
+        //{
+        //    var token = dataAccess.IsUserPresent(user.Email, user.Password);
+        //    if (token == "") token = "invalid";
+        //    return Ok(token);
+        //}
 
         [HttpPost("InsertFeedback")]
         public IActionResult InsertFeedback([FromBody] Feedback feedback)

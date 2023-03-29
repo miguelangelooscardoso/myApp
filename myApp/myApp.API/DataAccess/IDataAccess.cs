@@ -11,10 +11,10 @@ namespace myApp.API.DataAccess
         List<Item> GetItems(string category, string artist, int count);
         Item GetItem(int id);
         bool InsertUser(User user);
-        string IsUserPresent(string email, string password);
+        //string IsUserPresent(string email, string password);
+        User GetUser(int id);
         void InsertFeedback(Feedback feedback);
         List<Feedback> GetItemFeedbacks(int itemId);
-        User GetUser(int id);
         bool InsertCartItem(int userid, int itemId);
         Cart GetActiveCartOfUser(int userid);
         Cart GetCart(int cartid);
