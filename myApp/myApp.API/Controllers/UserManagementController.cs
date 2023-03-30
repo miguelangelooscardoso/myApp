@@ -9,12 +9,13 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace myApp.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class LoginController : ControllerBase
+	public class UserManagement : ControllerBase
     {
 		// SignInManager is a concrete class responsible for authenticating a user
 		// (signing in and signing out our user)
@@ -27,7 +28,7 @@ namespace myApp.API.Controllers
 		private readonly RoleManager<IdentityRole<int>> _roleManager;
 
 
-        public LoginController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole<int>> roleManager)
+        public UserManagement(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole<int>> roleManager)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
@@ -89,7 +90,7 @@ namespace myApp.API.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("Login")]
 		public async Task<ActionResult<UserDTO>> Login([FromBody] LoginBindingModel model)
 		{
 			try
@@ -133,7 +134,82 @@ namespace myApp.API.Controllers
 			}
 		}
 
-		private string GenerateToken(AppUser appuser, List<UserClaimDTO> userClaims)
+        [HttpGet("GetAllUser")]
+        public async Task<ActionResult<List<UserDTO>>> GetAllUser()
+        {
+            try
+            {
+                var users = await _userManager.Users.ToListAsync();
+                var userDTOs = users.Select(user => new UserDTO
+                {
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Role = _userManager.GetRolesAsync(user).Result.FirstOrDefault() ?? "",
+                    Token = "",
+                    Claims = new List<UserClaimDTO>()
+                }).ToList();
+                return Ok(userDTOs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("UpdateUserRole/{userId}")]
+        public async Task<ActionResult> UpdateUserRole(string userId, [FromBody] string newRole)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return NotFound($"User with Id = {userId} not found.");
+                }
+
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                var result = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                if (!result.Succeeded)
+                {
+                    return BadRequest($"Failed to remove user {user.Email} from roles.");
+                }
+
+                result = await _userManager.AddToRoleAsync(user, newRole);
+                if (!result.Succeeded)
+                {
+                    return BadRequest($"Failed to add user {user.Email} to role {newRole}.");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(result.Errors);
+        }
+
+        private string GenerateToken(AppUser appuser, List<UserClaimDTO> userClaims)
 		{
 			var claims = new List<System.Security.Claims.Claim>
 			{
