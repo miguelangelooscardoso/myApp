@@ -1,0 +1,22 @@
+SELECT TOP (1000) [Id]
+      ,[FullName]
+      ,[DateCreated]
+      ,[DateModified]
+      ,[UserName]
+      ,[NormalizedUserName]
+      ,[Email]
+      ,[NormalizedEmail]
+      ,[EmailConfirmed]
+      ,[PasswordHash]
+      ,[SecurityStamp]
+      ,[ConcurrencyStamp]
+      ,[PhoneNumber]
+      ,[PhoneNumberConfirmed]
+      ,[TwoFactorEnabled]
+      ,[LockoutEnd]
+      ,[LockoutEnabled]
+      ,[AccessFailedCount]
+  FROM [myApp].[dbo].[AspNetUsers]
+
+UPDATE AspNetUsers SET EmailConfirmed = 'false' WHERE Id = 1;
+

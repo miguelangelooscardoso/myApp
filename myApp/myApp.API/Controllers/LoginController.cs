@@ -8,6 +8,7 @@ using Claim.Helper;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 
 namespace myApp.API.Controllers
 {
@@ -23,13 +24,72 @@ namespace myApp.API.Controllers
 		// (this class create, update and delete our user)
 		private readonly UserManager<AppUser> _userManager;
 
-        public LoginController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+		private readonly RoleManager<IdentityRole<int>> _roleManager;
+
+
+        public LoginController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole<int>> roleManager)
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
+            _roleManager = roleManager;
         }
 
-		[HttpPost]
+        [HttpPost("RegisterUser")]
+        public async Task<ActionResult<UserDTO>> RegisterUser([FromBody] AddUpdateRegisterUserBindingModel model)
+        {
+            try
+            {
+                if (model.Roles == null)
+                {
+                    return BadRequest("Roles are missing");
+                }
+
+                foreach (var role in model.Roles)
+                {
+                    if (!await _roleManager.RoleExistsAsync(role))
+                    {
+                        return BadRequest("Role does not exist");
+                    }
+                }
+
+                var user = new AppUser() { FullName = model.FullName, Email = model.Email, UserName = model.Email, DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result != null && result.Succeeded)
+                {
+                    var tempUser = await _userManager.FindByEmailAsync(model.Email);
+                    var userClaims = new List<UserClaimDTO>();
+                    foreach (var role in model.Roles)
+                    {
+                        userClaims.Add(new UserClaimDTO { ClaimType = role, ClaimValue = role });
+                        await _userManager.AddToRoleAsync(tempUser, role);
+                    }
+
+                    var userDTO = new UserDTO()
+                    {
+                        FullName = tempUser.FullName,
+                        Email = tempUser.Email,
+                        Role = model.Roles.FirstOrDefault(), // Return the first role
+                        Claims = userClaims,
+                        Token = GenerateToken(tempUser, userClaims)
+                    };
+
+                    return Ok(userDTO);
+                }
+                else
+                {
+                    var errorMessages = result.Errors.Select(e => e.Description).ToArray();
+                    return BadRequest(errorMessages);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpPost]
 		public async Task<ActionResult<UserDTO>> Login([FromBody] LoginBindingModel model)
 		{
 			try
