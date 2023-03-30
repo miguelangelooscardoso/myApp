@@ -36,23 +36,32 @@ namespace myApp.API.Controllers
         }
 
         [HttpPost("RegisterUser")]
-        public async Task<ActionResult<UserDTO>> RegisterUser([FromBody] AddUpdateRegisterUserBindingModel model)
+        public async Task<ActionResult<UserDTO>> RegisterUser([FromBody] RegisterBindingModel model)
         {
             try
             {
-                if (model.Roles == null)
+                // Replace empty string with default role "User"
+                if (model.Roles == null || model.Roles.Contains(""))
                 {
-                    return BadRequest("Roles are missing");
+                    model.Roles = new List<string>() { "User" };
                 }
 
+                // Validate the roles
                 foreach (var role in model.Roles)
                 {
                     if (!await _roleManager.RoleExistsAsync(role))
                     {
                         return BadRequest("Role does not exist");
                     }
+                    if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(role, "Employee", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return BadRequest("You are not authorized to assign this role.");
+                    }
+
                 }
 
+                // Create the user
                 var user = new AppUser() { FullName = model.FullName, Email = model.Email, UserName = model.Email, DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -70,7 +79,7 @@ namespace myApp.API.Controllers
                     {
                         FullName = tempUser.FullName,
                         Email = tempUser.Email,
-                        Role = model.Roles.FirstOrDefault(), // Return the first role
+                        Role = "User",
                         Claims = userClaims,
                         Token = GenerateToken(tempUser, userClaims)
                     };
@@ -150,6 +159,60 @@ namespace myApp.API.Controllers
                     Claims = new List<UserClaimDTO>()
                 }).ToList();
                 return Ok(userDTOs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("CreateUser")]
+        public async Task<ActionResult<UserDTO>> CreateUser([FromBody] RegisterBindingModel model)
+        {
+            try
+            {
+                if (model.Roles == null)
+                {
+                    return BadRequest("Roles are missing");
+                }
+
+                foreach (var role in model.Roles)
+                {
+                    if (!await _roleManager.RoleExistsAsync(role))
+                    {
+                        return BadRequest("Role does not exist");
+                    }
+                }
+
+                var user = new AppUser() { FullName = model.FullName, Email = model.Email, UserName = model.Email, DateCreated = DateTime.UtcNow, DateModified = DateTime.UtcNow };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result != null && result.Succeeded)
+                {
+                    var tempUser = await _userManager.FindByEmailAsync(model.Email);
+                    var userClaims = new List<UserClaimDTO>();
+                    foreach (var role in model.Roles)
+                    {
+                        userClaims.Add(new UserClaimDTO { ClaimType = role, ClaimValue = role });
+                        await _userManager.AddToRoleAsync(tempUser, role);
+                    }
+
+                    var userDTO = new UserDTO()
+                    {
+                        FullName = tempUser.FullName,
+                        Email = tempUser.Email,
+                        Role = model.Roles.FirstOrDefault(), // Return the first role
+                        Claims = userClaims,
+                        Token = GenerateToken(tempUser, userClaims)
+                    };
+
+                    return Ok(userDTO);
+                }
+                else
+                {
+                    var errorMessages = result.Errors.Select(e => e.Description).ToArray();
+                    return BadRequest(errorMessages);
+                }
             }
             catch (Exception ex)
             {

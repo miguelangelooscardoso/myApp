@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Claim.Common.BindingModel
 {
-	public class AddUpdateRegisterUserBindingModel
+	public class RegisterBindingModel
 	{
         public string FullName { get; set; }
         public string Email { get; set; }
