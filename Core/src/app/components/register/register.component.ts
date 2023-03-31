@@ -48,24 +48,53 @@ export class RegisterComponent implements OnInit{
     });
   }
 
+  // register() {
+  //   let user: User = {
+  //     id: 0,
+  //     firstName: this.FirstName.value,
+  //     lastName: this.LastName.value,
+  //     email: this.Email.value,
+  //     address: this.Address.value,
+  //     mobile: this.Mobile.value,
+  //     password: this.PWD.value,
+  //     createdAt: '',
+  //     modifiedAt: '',
+  //   };
+
+  //   this.navigationService.registerUser(user).subscribe((res: any) => {
+  //     console.log(res)
+  //     this.message = res.toString();
+  //   });
+  // }
+
   register() {
     let user: User = {
       id: 0,
-      firstName: this.FirstName.value,
-      lastName: this.LastName.value,
+      fullName: this.FirstName.value + ' ' + this.LastName.value,
       email: this.Email.value,
-      address: this.Address.value,
-      mobile: this.Mobile.value,
-      password: this.PWD.value,
-      createdAt: '',
-      modifiedAt: '',
+      userName: '',
+      normalizedUserName: '',
+      normalizedEmail: '',
+      emailConfirmed: false,
+      passwordHash: '',
+      securityStamp: '',
+      concurrencyStamp: '',
+      phoneNumber: '',
+      phoneNumberConfirmed: false,
+      twoFactorEnabled: false,
+      lockoutEnd: '',
+      lockoutEnabled: false,
+      accessFailedCount: 0,
+      dateCreated: '',
+      dateModified: ''
     };
-
+  
     this.navigationService.registerUser(user).subscribe((res: any) => {
       console.log(res)
       this.message = res.toString();
     });
   }
+  
 
   //#region Getters
   get FirstName(): FormControl {

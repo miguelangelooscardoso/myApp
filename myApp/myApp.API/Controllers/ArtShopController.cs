@@ -44,19 +44,19 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost("RegisterUser")]
-        public IActionResult RegisterUser([FromBody] User user)
-        {
-            user.CreatedAt = DateTime.Now.ToString(DateFormat);
-            user.ModifiedAt = DateTime.Now.ToString(DateFormat);
+        //[HttpPost("RegisterUser")]
+        //public IActionResult RegisterUser([FromBody] User user)
+        //{
+        //    user.CreatedAt = DateTime.Now.ToString(DateFormat);
+        //    user.ModifiedAt = DateTime.Now.ToString(DateFormat);
 
-            var result = dataAccess.InsertUser(user);
+        //    var result = dataAccess.InsertUser(user);
 
-            string? message;
-            if (result) message = "inserted";
-            else message = "email not available";
-            return Ok(message);
-        }
+        //    string? message;
+        //    if (result) message = "inserted";
+        //    else message = "email not available";
+        //    return Ok(message);
+        //}
 
         //[HttpPost("LoginUser")]
         //public IActionResult LoginUser([FromBody] User user)

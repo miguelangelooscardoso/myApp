@@ -17,9 +17,11 @@ import { OpenItemsDirective } from './directives/open-items.directive';
 import { OpenItemDetailsDirective } from './directives/open-item-details.directive';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
+import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
+import { JwtService } from './services/jwt-service';
+import { AuthInterceptor } from './helpers/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,7 @@ import { OrderTrackingComponent } from './order-tracking/order-tracking.componen
       },
     }),
   ],
-  providers: [],
+  providers: [JwtService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

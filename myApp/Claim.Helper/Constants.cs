@@ -18,8 +18,8 @@ namespace Claim.Helper
         public static readonly string GET_USER_CALIM_VALUE = "Get User";
 
         public static readonly string SECRET_KEY = "thisIsSecretKeyAndShouldBelong343";
-        public static readonly string Issuer = "AppClaim";
-        public static readonly string Audience = "AppClaim";
+        public static readonly string Issuer = "localhost:7275";
+        public static readonly string Audience = "localhost:4200";
 
 
     }

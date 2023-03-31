@@ -12,6 +12,7 @@ import { Order } from '../models/order';
 })
 export class NavigationService {
   baseUrl = "https://localhost:7275/api/ArtShop/";
+  usersUrl = "https://localhost:7275/api/UserManagement/";
 
   constructor(private http: HttpClient) { }
 
@@ -50,14 +51,14 @@ export class NavigationService {
     return this.http.post(url, user, {responseType: 'text'});
   }
 
-  loginUser(email: string, password: string) {
-    let url = this.baseUrl + "LoginUser"
-    return this.http.post(
-      url,
-      {Email: email, Password: password},
-      {responseType: 'text'}
-    );
-  }
+  // loginUser(email: string, password: string) {
+  //   let url = this.usersUrl + "Login"
+  //   return this.http.post(
+  //     url,
+  //     {Email: email, Password: password},
+  //     {responseType: 'text'}
+  //   );
+  // }
 
   submitFeedback(userid: number, itemid: number, feedback: string) {
     let obj: any = {
@@ -104,7 +105,7 @@ export class NavigationService {
   }
 
   insertOrder(order: Order) {
-    return this.http.post(this.baseUrl + 'IsertOrder', order);
+    return this.http.post(this.baseUrl + 'InsertOrder', order);
   }
 }
 

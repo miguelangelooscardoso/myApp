@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ProgressBarConfig } from '../models/progress-bar-config';
+import { ProgressBarConfig } from '../../models/progress-bar-config';
 
 @Component({
   selector: 'app-order-tracking',

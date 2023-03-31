@@ -24,21 +24,46 @@ export class UtilityService {
 
   // JWT Helper Service : npm install @auth0/angular-jwt
 
+  // getUser(): User {
+  //   let token = this.jwt.decodeToken();
+  //   let user: User = {
+  //     id: token.id,
+  //     firstName: token.firstName,
+  //     lastName: token.lastName,
+  //     address: token.address,
+  //     mobile: token.mobile,
+  //     email: token.email,
+  //     password: '',
+  //     createdAt: token.createdAt,
+  //     modifiedAt: token.modifiedAt,
+  //   };
+  //   return user;
+  // }
+
   getUser(): User {
     let token = this.jwt.decodeToken();
     let user: User = {
       id: token.id,
-      firstName: token.firstName,
-      lastName: token.lastName,
-      address: token.address,
-      mobile: token.mobile,
+      fullName: token.fullName,
+      userName: token.userName,
+      normalizedUserName: token.normalizedUserName,
       email: token.email,
-      password: '',
-      createdAt: token.createdAt,
-      modifiedAt: token.modifiedAt,
+      normalizedEmail: token.normalizedEmail,
+      emailConfirmed: token.emailConfirmed,
+      passwordHash: token.passwordHash,
+      securityStamp: token.securityStamp,
+      concurrencyStamp: token.concurrencyStamp,
+      phoneNumber: token.phoneNumber,
+      phoneNumberConfirmed: token.phoneNumberConfirmed,
+      twoFactorEnabled: token.twoFactorEnabled,
+      lockoutEnd: token.lockoutEnd,
+      lockoutEnabled: token.lockoutEnabled,
+      accessFailedCount: token.accessFailedCount,
+      dateCreated: token.dateCreated,
+      dateModified: token.dateModified
     };
     return user;
-  }
+  }  
 
   setUser(token: string) {
     localStorage.setItem('user', token);

@@ -177,41 +177,41 @@ namespace myApp.API.DataAccess
             return item;
         }
 
-        public bool InsertUser(User user)
-        {
-            using (SqlConnection connection = new(dbconnection))
-            {
-                SqlCommand command = new()
-                {
-                    Connection = connection
-                };
-                connection.Open();
+        //public bool InsertUser(User user)
+        //{
+        //    using (SqlConnection connection = new(dbconnection))
+        //    {
+        //        SqlCommand command = new()
+        //        {
+        //            Connection = connection
+        //        };
+        //        connection.Open();
 
-                string query = "SELECT COUNT(*) FROM Users WHERE Email='" + user.Email + "';";
-                command.CommandText = query;
-                int count = (int)command.ExecuteScalar();
-                if (count > 0)
-                {
-                    connection.Close();
-                    return false;
-                }
+        //        string query = "SELECT COUNT(*) FROM Users WHERE Email='" + user.Email + "';";
+        //        command.CommandText = query;
+        //        int count = (int)command.ExecuteScalar();
+        //        if (count > 0)
+        //        {
+        //            connection.Close();
+        //            return false;
+        //        }
 
-                query = "INSERT INTO Users (FirstName, LastName, Address, Mobile, Email, Password, CreatedAt, ModifiedAt) values (@fn, @ln, @add, @mb, @em, @pwd, @cat, @mat);";
+        //        query = "INSERT INTO Users (FirstName, LastName, Address, Mobile, Email, Password, CreatedAt, ModifiedAt) values (@fn, @ln, @add, @mb, @em, @pwd, @cat, @mat);";
 
-                command.CommandText = query;
-                command.Parameters.Add("@fn", System.Data.SqlDbType.NVarChar).Value = user.FirstName;
-                command.Parameters.Add("@ln", System.Data.SqlDbType.NVarChar).Value = user.LastName;
-                command.Parameters.Add("@add", System.Data.SqlDbType.NVarChar).Value = user.Address;
-                command.Parameters.Add("@mb", System.Data.SqlDbType.NVarChar).Value = user.Mobile;
-                command.Parameters.Add("@em", System.Data.SqlDbType.NVarChar).Value = user.Email;
-                command.Parameters.Add("@pwd", System.Data.SqlDbType.NVarChar).Value = user.Password;
-                command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = user.CreatedAt;
-                command.Parameters.Add("@mat", System.Data.SqlDbType.NVarChar).Value = user.ModifiedAt;
+        //        command.CommandText = query;
+        //        command.Parameters.Add("@fn", System.Data.SqlDbType.NVarChar).Value = user.FirstName;
+        //        command.Parameters.Add("@ln", System.Data.SqlDbType.NVarChar).Value = user.LastName;
+        //        command.Parameters.Add("@add", System.Data.SqlDbType.NVarChar).Value = user.Address;
+        //        command.Parameters.Add("@mb", System.Data.SqlDbType.NVarChar).Value = user.Mobile;
+        //        command.Parameters.Add("@em", System.Data.SqlDbType.NVarChar).Value = user.Email;
+        //        command.Parameters.Add("@pwd", System.Data.SqlDbType.NVarChar).Value = user.Password;
+        //        command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = user.CreatedAt;
+        //        command.Parameters.Add("@mat", System.Data.SqlDbType.NVarChar).Value = user.ModifiedAt;
 
-                command.ExecuteNonQuery();
-            }
-            return true;
-        }
+        //        command.ExecuteNonQuery();
+        //    }
+        //    return true;
+        //}
 
         //public string IsUserPresent(string email, string password)
         //{
@@ -298,7 +298,38 @@ namespace myApp.API.DataAccess
             command.ExecuteNonQuery();
         }
 
-        public User GetUser(int id)
+        //public User GetUser(int id)
+        //{
+        //    var user = new User();
+        //    using (SqlConnection connection = new(dbconnection))
+        //    {
+        //        SqlCommand command = new()
+        //        {
+        //            Connection = connection
+        //        };
+
+        //        string query = "SELECT * FROM Users WHERE UserId=" + id + ";";
+        //        command.CommandText = query;
+
+        //        connection.Open();
+        //        SqlDataReader reader = command.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            user.Id = (int)reader["UserId"];
+        //            user.FirstName = (string)reader["FirstName"];
+        //            user.LastName = (string)reader["LastName"];
+        //            user.Email = (string)reader["Email"];
+        //            user.Address = (string)reader["Address"];
+        //            user.Mobile = (string)reader["Mobile"];
+        //            user.Password = (string)reader["Password"];
+        //            user.CreatedAt = (string)reader["CreatedAt"];
+        //            user.ModifiedAt = (string)reader["ModifiedAt"];
+        //        }
+        //    }
+        //    return user;
+        //}
+
+        public User GetUser(int userId)
         {
             var user = new User();
             using (SqlConnection connection = new(dbconnection))
@@ -307,27 +338,23 @@ namespace myApp.API.DataAccess
                 {
                     Connection = connection
                 };
+                connection.Open();
 
-                string query = "SELECT * FROM Users WHERE UserId=" + id + ";";
+                string query = "SELECT * From AspNetUsers WHERE Id='" + userId + "';";
                 command.CommandText = query;
 
-                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    user.Id = (int)reader["UserId"];
-                    user.FirstName = (string)reader["FirstName"];
-                    user.LastName = (string)reader["LastName"];
+                    user.Id = (int)reader["Id"];
                     user.Email = (string)reader["Email"];
-                    user.Address = (string)reader["Address"];
-                    user.Mobile = (string)reader["Mobile"];
-                    user.Password = (string)reader["Password"];
-                    user.CreatedAt = (string)reader["CreatedAt"];
-                    user.ModifiedAt = (string)reader["ModifiedAt"];
+                    user.UserName = (string)reader["UserName"];
                 }
             }
             return user;
         }
+
+        // Needs GetUser()!!!!
 
         public List<Feedback> GetItemFeedbacks(int itemId)
         {
@@ -399,6 +426,7 @@ namespace myApp.API.DataAccess
             }
         }
 
+        // Requires GetUser()!!!
         public Cart GetActiveCartOfUser(int userid)
         {
             var cart = new Cart();
@@ -467,6 +495,8 @@ namespace myApp.API.DataAccess
             return carts;
         }
 
+        // Requires GetUser()!!!
+        // The GetCart method returns a Cart object!!!
         public Cart GetCart(int cartid)
         {
             var cart = new Cart();
@@ -478,7 +508,7 @@ namespace myApp.API.DataAccess
                 };
                 connection.Open();
 
-                string query = "SELECT * FROM CartItems WHERE CartId=" + cartid + ';';
+                string query = "SELECT * FROM CartItems WHERE CartId=" + cartid + ";";
                 command.CommandText = query;
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -507,6 +537,7 @@ namespace myApp.API.DataAccess
             }
             return cart;
         }
+
 
         public List<PaymentMethod> GetPaymentMethods()
         {

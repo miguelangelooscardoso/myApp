@@ -77,8 +77,8 @@ export class OrderComponent implements OnInit {
       });
 
     // Set address and mobile number
-    this.address = this.utilityService.getUser().address;
-    this.mobileNumber = this.utilityService.getUser().mobile;
+    // this.address = this.utilityService.getUser().address;
+    // this.mobileNumber = this.utilityService.getUser().mobile;
   }
   getPaymentMethod(id: string) {
     let x = this.paymentMethods.find((v) => v.id === parseInt(id));

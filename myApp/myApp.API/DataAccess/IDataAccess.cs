@@ -10,7 +10,7 @@ namespace myApp.API.DataAccess
         Offer GetOffer(int id);
         List<Item> GetItems(string category, string artist, int count);
         Item GetItem(int id);
-        bool InsertUser(User user);
+        //bool InsertUser(User user);
         //string IsUserPresent(string email, string password);
         User GetUser(int id);
         void InsertFeedback(Feedback feedback);

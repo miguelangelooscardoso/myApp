@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using myApp.API.Controllers;
 using myApp.API.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DB"));
+});
+
+builder.Services.AddDbContext<MyDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DB"));
 });

@@ -102,8 +102,7 @@
                 <div class="card mt-3" *ngFor="let feedback of otherFeedbacks">
                     <div class="card-header d-flex justify-content-between">
                         <div class="card-text">
-                            {{feedback.user.firstName}}
-                            {{feedback.user.lastName}}
+                            {{feedback.user.fullName}}
                         </div>
                         <div class="card-text fst-italic">
                             Reviewed On: <span class="fw-bold">{{feedback.createdAt| date:"dd-MM-yyyy"}}</span>
