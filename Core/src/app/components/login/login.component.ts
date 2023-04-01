@@ -92,6 +92,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   message = "";
   jwtToken: string = '';
+  isLoggedIn = false;
 
   constructor(
     private fb: FormBuilder,
@@ -133,15 +134,29 @@ export class LoginComponent implements OnInit {
           this.message = res.error;
         } else {
           this.message = 'Logged In Successfully.';
-          this.jwtToken = res.toString();
-          const decodedToken = this.jwtService.decodeToken(this.jwtToken);
+          this.jwtToken = res.token;
+          this.authService.storeToken(this.jwtToken);
+          const decodedToken = this.jwtService.decodeToken(this.jwtToken); // payload
           console.log('Decoded JWT:', decodedToken);
-          this.utilityService.setUser(decodedToken);
+          localStorage.setItem('decodedToken', JSON.stringify(decodedToken));
+          // this.isLoggedIn = true;
+
+          // Check token validity
+          const isValid = this.jwtService.isTokenExpired(this.jwtToken);
+          console.log('Token is valid:', !isValid); // true
+
+          // I am having an error when I add these two lines of code
+          // "The inspected token doesn't appear to be a JWT."
+          this.utilityService.setUser(res.toString());
+          console.log(this.utilityService.getUser());
         }
       });
   }
-  
-  
+
+  // logout(){
+  //   this.authService.signOut();
+  // }
+
 
   get Email(): FormControl {
     return this.loginForm.get('email') as FormControl;
@@ -151,6 +166,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('pwd') as FormControl;
   }
 }
+
 
 
 

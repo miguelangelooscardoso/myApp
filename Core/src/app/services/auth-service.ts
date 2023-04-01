@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
     private tokenKey = 'auth_token';
     private userSubject = new BehaviorSubject<any>(null);
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     // token obtained from the API response and then stored in the local storage
 
@@ -27,12 +28,32 @@ export class AuthService {
             })
         );
     }
+    
+    // signUp(loginObj: any) {
+    //     return this.http.post<any>(`${this.authUrl}/register`, userObj)
+    // }
 
-    getAuthToken(): string | null {
-        return localStorage.getItem(this.tokenKey);
+    // signIn(loginObj: any) {
+    //     return this.http.post<any>(`${this.authUrl}/login`, loginObj)
+    // }
+
+    signOut(){
+        localStorage.clear();
+        // alternative
+        // localStorage.removeItem('token');
+        this.router.navigate(['/login'])
+    }
+    
+
+    storeToken(tokenValue: string) {
+        localStorage.setItem('token', tokenValue)
     }
 
-    getUserSubject() {
-        return this.userSubject.asObservable();
+    getToken(){
+        return localStorage.getItem('token')
     }
+
+    // isLoggedIn(): boolean{
+    //     return !!localStorage.getItem('token')
+    // }
 }
