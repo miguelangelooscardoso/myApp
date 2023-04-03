@@ -34,8 +34,8 @@ export class RegisterComponent implements OnInit{
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required]],
-      mobile: ['', Validators.required],
+      // address: ['', [Validators.required]],
+      // mobile: ['', Validators.required],
       pwd: [
         '',
         [
@@ -72,12 +72,15 @@ export class RegisterComponent implements OnInit{
       id: 0,
       fullName: this.FirstName.value + ' ' + this.LastName.value,
       email: this.Email.value,
-      // role: this.Role.Value
+      password: this.PWD.value,
+      roles: ["User"],
     };
   
+    console.log(user);
+
     this.navigationService.registerUser(user).subscribe((res: any) => {
       console.log(res)
-      this.message = res.toString();
+      this.message = 'Registered Successfully!';
     });
   }
   
@@ -92,12 +95,12 @@ export class RegisterComponent implements OnInit{
   get Email(): FormControl {
     return this.registerForm.get('email') as FormControl;
   }
-  get Address(): FormControl {
-    return this.registerForm.get('address') as FormControl;
-  }
-  get Mobile(): FormControl {
-    return this.registerForm.get('mobile') as FormControl;
-  }
+  // get Address(): FormControl {
+  //   return this.registerForm.get('address') as FormControl;
+  // }
+  // get Mobile(): FormControl {
+  //   return this.registerForm.get('mobile') as FormControl;
+  // }
   get PWD(): FormControl {
     return this.registerForm.get('pwd') as FormControl;
   }

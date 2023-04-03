@@ -46,8 +46,9 @@ export class UtilityService {
     let user: User = {
       id: token.sub,
       fullName: token.fullName,
-      email: token.name
-      // role: token.role
+      email: token.name,
+      password: token.password,
+      roles: token.role
     };
     return user;
   }  

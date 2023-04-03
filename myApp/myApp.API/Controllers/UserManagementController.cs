@@ -99,6 +99,49 @@ namespace myApp.API.Controllers
         //    }
         //}
 
+        // Functional Register (no matter which role you set it automatically creates a new "User")
+        [HttpPost("Register")]
+        public async Task<ActionResult<UserDTO>> Register([FromBody] RegisterBindingModel model)
+        {
+            try
+            {
+                var user = new AppUser()
+                {
+                    Id = model.Id, // Assign the ID property from the model to the Id property of the AppUser object
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FullName = model.FullName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "User"); // Assign "User" role to the new user
+
+                    var userDTO = new UserDTO
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        Role = "User", // Set the role to "User"
+                        Token = GenerateToken(user)
+                    };
+
+                    return userDTO;
+                }
+                else
+                {
+                    return BadRequest(result.Errors.FirstOrDefault()?.Description);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
         //      [HttpPost("Login")]
         //public async Task<ActionResult<UserDTO>> Login([FromBody] LoginBindingModel model)
@@ -173,7 +216,7 @@ namespace myApp.API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("GetAllUser")]
         public async Task<ActionResult<List<UserDTO>>> GetAllUser()
         {

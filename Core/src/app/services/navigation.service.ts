@@ -51,7 +51,7 @@ export class NavigationService {
   }
 
   registerUser(user: User) {
-    let url = this.baseUrl + "RegisterUser";
+    let url = this.usersUrl + "Register";
     return this.http.post(url, user, {responseType: 'text'});
   }
 
