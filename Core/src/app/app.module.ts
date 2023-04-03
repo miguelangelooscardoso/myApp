@@ -22,6 +22,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
 import { JwtService } from './services/jwt-service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     RegisterComponent,
     LoginComponent,
     OrderTrackingComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,

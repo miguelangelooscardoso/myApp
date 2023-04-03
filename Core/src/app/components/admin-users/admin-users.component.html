@@ -1,0 +1,33 @@
+<section class="m-3 p-4  border border-dark my-rounded-corner text-center">
+    <h2>Users List</h2>
+</section>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" [ngClass]="{
+        'table-success': user.roles.includes('User'),
+        'table-warning': user.roles.includes('Employee'),
+        'table-danger': user.roles.includes('Admin')
+      }">
+        <td>{{ user.id }}</td>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.roles.join(', ') }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+

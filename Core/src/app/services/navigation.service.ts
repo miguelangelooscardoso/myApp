@@ -20,6 +20,20 @@ export class NavigationService {
     return this.http.get<any>(this.usersUrl + 'GetAllUser');
   }
 
+  addUser(newUser: User) {
+    return this.http.post<User>(this.usersUrl, newUser);
+  }
+
+  updateUser(user: User) {
+    const url = `${this.usersUrl}/${user.id}`;
+    return this.http.put<User>(url, user);
+  }
+
+  deleteUser(id: number) {
+    const url = `${this.usersUrl}/${id}`;
+    return this.http.delete<User>(url);
+  }
+
   getCategoryList() {
     let url = this.baseUrl + 'GetCategoryList';
     return this.http.get<any[]>(url).pipe(
