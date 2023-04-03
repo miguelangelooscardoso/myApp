@@ -98,7 +98,8 @@ export class UtilityService {
     if (payment.amountPaid > 1000) payment.shippingCharges = 50;
     else if (payment.amountPaid > 500) payment.shippingCharges = 10;
     else if (payment.amountPaid > 250) payment.shippingCharges = 5;
-    else payment.shippingCharges = 2.5;
+    else if (payment.amountPaid > 0 && payment.amountPaid < 250) payment.shippingCharges = 5;
+    else payment.shippingCharges = 0;
   }
 
   calculatePricePaid(cart: Cart) {
