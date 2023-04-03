@@ -42,25 +42,12 @@ export class UtilityService {
 
   getUser(): User {
     let token = this.jwt.decodeToken();
+    console.log('Decoded token:', token); // succeeded
     let user: User = {
-      id: token.id,
+      id: token.sub,
       fullName: token.fullName,
-      userName: token.userName,
-      normalizedUserName: token.normalizedUserName,
-      email: token.email,
-      normalizedEmail: token.normalizedEmail,
-      emailConfirmed: token.emailConfirmed,
-      passwordHash: token.passwordHash,
-      securityStamp: token.securityStamp,
-      concurrencyStamp: token.concurrencyStamp,
-      phoneNumber: token.phoneNumber,
-      phoneNumberConfirmed: token.phoneNumberConfirmed,
-      twoFactorEnabled: token.twoFactorEnabled,
-      lockoutEnd: token.lockoutEnd,
-      lockoutEnabled: token.lockoutEnabled,
-      accessFailedCount: token.accessFailedCount,
-      dateCreated: token.dateCreated,
-      dateModified: token.dateModified
+      email: token.name
+      // role: token.role
     };
     return user;
   }  

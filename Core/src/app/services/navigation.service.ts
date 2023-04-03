@@ -16,6 +16,10 @@ export class NavigationService {
 
   constructor(private http: HttpClient) { }
 
+  getUsers(){
+    return this.http.get<any>(this.usersUrl + 'GetAllUser');
+  }
+
   getCategoryList() {
     let url = this.baseUrl + 'GetCategoryList';
     return this.http.get<any[]>(url).pipe(

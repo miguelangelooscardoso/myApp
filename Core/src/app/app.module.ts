@@ -21,7 +21,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
 import { JwtService } from './services/jwt-service';
-import { AuthInterceptor } from './helpers/auth-interceptor';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [

@@ -72,21 +72,7 @@ export class RegisterComponent implements OnInit{
       id: 0,
       fullName: this.FirstName.value + ' ' + this.LastName.value,
       email: this.Email.value,
-      userName: '',
-      normalizedUserName: '',
-      normalizedEmail: '',
-      emailConfirmed: false,
-      passwordHash: '',
-      securityStamp: '',
-      concurrencyStamp: '',
-      phoneNumber: '',
-      phoneNumberConfirmed: false,
-      twoFactorEnabled: false,
-      lockoutEnd: '',
-      lockoutEnabled: false,
-      accessFailedCount: 0,
-      dateCreated: '',
-      dateModified: ''
+      // role: this.Role.Value
     };
   
     this.navigationService.registerUser(user).subscribe((res: any) => {

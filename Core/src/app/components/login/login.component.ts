@@ -147,7 +147,7 @@ export class LoginComponent implements OnInit {
 
           // I am having an error when I add these two lines of code
           // "The inspected token doesn't appear to be a JWT."
-          this.utilityService.setUser(res.toString());
+          this.utilityService.setUser(this.jwtToken);
           console.log(this.utilityService.getUser());
         }
       });

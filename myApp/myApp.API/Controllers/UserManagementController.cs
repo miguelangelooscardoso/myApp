@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace myApp.API.Controllers
 {
@@ -172,7 +173,7 @@ namespace myApp.API.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet("GetAllUser")]
         public async Task<ActionResult<List<UserDTO>>> GetAllUser()
         {
