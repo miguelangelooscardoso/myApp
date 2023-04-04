@@ -50,7 +50,7 @@ export class NavigationService {
   }
 
   deleteUser(id: number) {
-    const url = `${this.usersUrl}/${id}`;
+    const url = `${this.usersUrl}DeleteUser/${id}`;
     return this.http.delete<User>(url);
   }
 

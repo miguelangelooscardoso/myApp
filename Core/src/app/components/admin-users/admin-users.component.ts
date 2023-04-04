@@ -55,12 +55,18 @@ export class AdminUsersComponent implements OnInit {
     );    
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
+  deleteUser(user: User): void {
+    if (confirm(`Are you sure you want to delete ${user.fullName}?`)) {
+      this.navigationService.deleteUser(user.id).subscribe(
+        () => {
+          const index = this.users.findIndex((u) => u.id === user.id);
+          this.users.splice(index, 1);
+        },
+        (error) => {
+          console.log('Error deleting user:', error);
+        }
+      );
+    }
+  }
+
 }
