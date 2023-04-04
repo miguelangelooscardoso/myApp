@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Category } from '../models/category';
-import { map } from 'rxjs';
+import { catchError, map, tap, throwError } from 'rxjs';
 import { User } from '../models/user';
 import { PaymentMethod } from '../models/payment-method';
 import { Payment } from '../models/payment';
@@ -25,8 +25,28 @@ export class NavigationService {
   }
 
   updateUser(user: User) {
-    const url = `${this.usersUrl}/${user.id}`;
+    const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
     return this.http.put<User>(url, user);
+  }
+  
+  // updateUserRole(user: User, newRole: string) {
+  //   const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
+  //   const requestBody = `"${newRole}"`
+  //   console.log('requestBody:', requestBody);
+  //   return this.http.put<User>(url, requestBody);
+  // }
+
+  updateUserRole(user: User, newRole: string) {
+    const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
+    const requestBody = JSON.stringify(newRole);
+    const headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
+    return this.http.put<User>(url, requestBody, { headers }).pipe(
+      tap((updatedUser) => console.log(updatedUser)),
+      catchError((error) => {
+        console.log('Error updating user:', error);
+        return throwError(error);
+      })
+    );
   }
 
   deleteUser(id: number) {
