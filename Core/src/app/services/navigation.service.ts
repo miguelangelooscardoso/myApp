@@ -20,9 +20,32 @@ export class NavigationService {
     return this.http.get<any>(this.usersUrl + 'GetAllUser');
   }
 
-  addUser(newUser: User) {
-    return this.http.post<User>(this.usersUrl, newUser);
+  // addUser(newUser: User) {
+  //   return this.http.post<User>(this.usersUrl, newUser);
+  // }
+
+  addUser(user: User) {
+    let url = this.usersUrl + "AddUser";
+    const headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
+    const requestBody = {
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      password: user.password,
+      Role: user.roles
+    };
+    console.log("Request Body: ", requestBody);
+    return this.http.post(url, requestBody, {responseType: 'text'})
+      .pipe(
+        tap(response => console.log("Add User Response: ", response)),
+        catchError(error => {
+          console.log("Add User Error: ", error);
+          return throwError(error);
+        })
+      );
   }
+  
+
 
   updateUser(user: User) {
     const url = `${this.usersUrl}UpdateUserRole/${user.id}`;

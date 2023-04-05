@@ -346,6 +346,57 @@ namespace myApp.API.Controllers
             return BadRequest(result.Errors);
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("AddUser")]
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] AddUserBindingModel model)
+        {
+            try
+            {
+                var user = new AppUser()
+                {
+                    Id = model.Id,
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FullName = model.FullName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(model.Role))
+                    {
+                        await _userManager.AddToRoleAsync(user, model.Role);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+
+                    var userDTO = new UserDTO
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        Role = model.Role ?? "User",
+                        Token = GenerateToken(user)
+                    };
+
+                    return userDTO;
+                }
+                else
+                {
+                    return BadRequest(result.Errors.FirstOrDefault()?.Description);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
         //      private string GenerateToken(AppUser appuser, List<UserClaimDTO> userClaims)
         //{
         //	var claims = new List<System.Security.Claims.Claim>

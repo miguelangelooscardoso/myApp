@@ -23,6 +23,7 @@ import { OrderTrackingComponent } from './components/order-tracking/order-tracki
 import { JwtService } from './services/jwt-service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AddUsersComponent } from './components/add-users/add-users.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
     LoginComponent,
     OrderTrackingComponent,
     AdminUsersComponent,
+    AddUsersComponent,
   ],
   imports: [
     BrowserModule,
