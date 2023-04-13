@@ -14,12 +14,13 @@ export class OpenItemsDirective {
 
   @HostListener('click') openItems() {
     this.router.navigate(['/items'], {
-      queryParams: {
-        category: this.category.category,
-        artist: this.category.artistCategory,
-      },
+        queryParams: {
+            category: this.category.category,
+            artist: this.category.artistCategory,
+        },
     });
-  }
+}
+
 
   constructor(private router: Router) {}
 }

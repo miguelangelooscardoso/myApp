@@ -7,34 +7,36 @@ import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+  styleUrls: ['./items.component.css'],
 })
-export class ItemsComponent implements OnInit{
+export class ItemsComponent implements OnInit {
   view: 'grid' | 'list' = 'list';
   sortby: 'default' | 'htl' | 'lth' = 'default';
-  items: Item[] =[];
+  items: Item[] = [];
 
-  constructor( 
+  constructor(
     private activatedRoute: ActivatedRoute,
     private navigationService: NavigationService,
     private utilityService: UtilityService
-    ) {
+  ) {}
 
-  }
-
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       let category = params.category;
       let artist = params.artist;
-
+  
+      console.log('Category:', category); // Log category value
+      console.log('Artist:', artist); // Log artist value
+  
       if (category && artist)
         this.navigationService
-        .getItems(category, artist, 10) // number of items
-        .subscribe((res: any) => {
-          this.items = res;
-        });
+          .getItems(category, artist, 10)
+          .subscribe((res: any) => {
+            this.items = res;
+          });
     });
   }
+  
 
   sortByPrice(sortKey: string) {
     this.items.sort((a, b) => {
@@ -51,3 +53,4 @@ export class ItemsComponent implements OnInit{
     });
   }
 }
+

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Category } from '../models/category';
-import { catchError, map, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { User } from '../models/user';
 import { PaymentMethod } from '../models/payment-method';
 import { Payment } from '../models/payment';
@@ -77,19 +77,25 @@ export class NavigationService {
     return this.http.delete<User>(url);
   }
 
-  getCategoryList() {
+  getCategoryList(): Observable<Category[]> {
     let url = this.baseUrl + 'GetCategoryList';
     return this.http.get<any[]>(url).pipe(
-      map((categories) =>
-        categories.map((category) => {
+      map((categories) => {
+        console.log('Retrieved Categories:', categories); // Log retrieved categories
+        return categories.map((category) => {
           let mappedCategory: Category = {
             id: category.id,
             category: category.category,
-            artistCategory: category.artistCategory,
+            artistCategory: category.artist || '', // Update to use 'artist' property
           };
+          console.log('Mapped Category:', {
+            id: category.id,
+            category: category.category,
+            artistCategory: category.artist || '', // Update to use 'artist' property
+          }); // Log id, category, and artistCategory
           return mappedCategory;
-        })
-      )
+        });
+      })
     );
   }
   
