@@ -11,7 +11,7 @@ import { UtilityService } from 'src/app/services/utility.service';
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css']
 })
-export class ItemDetailsComponent implements OnInit{
+export class ItemDetailsComponent implements OnInit {
   imageIndex: number = 1;
   item !: Item;
   feedbackControl = new FormControl('');
@@ -23,22 +23,24 @@ export class ItemDetailsComponent implements OnInit{
     private activatedRoute: ActivatedRoute,
     private navigationService: NavigationService,
     public utilityService: UtilityService
-    ) {
+  ) {
   }
-  ngOnInit(): void{
+
+  ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       let id = params.id;
       this.navigationService.getItem(id).subscribe((res: any) => {
         this.item = res;
+        console.log('Item:', this.item); // Log the Item object
         this.fetchAllFeedbacks();
       });
     });
   }
 
-  submitFeedback(){
+  submitFeedback() {
     let feedback = this.feedbackControl.value;
 
-    if(feedback === '' || feedback === null){
+    if (feedback === '' || feedback === null) {
       this.showError = true;
       return;
     }
@@ -48,22 +50,33 @@ export class ItemDetailsComponent implements OnInit{
 
     this.navigationService
       .submitFeedback(userid, itemid, feedback)
-      .subscribe((res) => {
-        this.feedbackSaved = true;
-        this.fetchAllFeedbacks();
-        this.feedbackControl.setValue('');
-      });
+      .subscribe(
+        (res) => {
+          console.log('Submit Feedback Result:', res); // Log the result
+          this.feedbackSaved = true;
+          this.fetchAllFeedbacks();
+          this.feedbackControl.setValue('');
+        },
+        (error) => {
+          console.error('Submit Feedback Error:', error); // Log the error
+        }
+      );
   }
 
-  fetchAllFeedbacks(){
+  fetchAllFeedbacks() {
     this.otherFeedbacks = [];
     this.navigationService
       .getAllFeedbacksOfItem(this.item.id)
-      .subscribe((res: any) => {
-        for (let feedback of res){
-          this.otherFeedbacks.push(feedback);
+      .subscribe(
+        (res: any) => {
+          console.log('Fetch All Feedbacks Result:', res); // Log the result
+          for (let feedback of res) {
+            this.otherFeedbacks.push(feedback);
+          }
+        },
+        (error) => {
+          console.error('Fetch All Feedbacks Error:', error); // Log the error
         }
-      });
+      );
   }
-
 }

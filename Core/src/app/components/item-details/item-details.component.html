@@ -1,11 +1,12 @@
 <div class="my-container mx-auto border border-dark">
     <div class="row g-0">
-        <div>  
+        <!-- Working -->
+        <!-- <div>
             category: {{item.itemCategory.category}}
             artist: {{item.itemCategory.artistCategory}}
             id: {{item.id}}
-        </div>
-        
+        </div> -->
+
         <!-- Profile Image of Product -->
         <div class="col-4 p-4">
             <div class="d-flex justify-content-center align-items-center">
@@ -42,7 +43,8 @@
                     <h6 class="card-subtitle my-2 text-primary">{{item.quantity}} products available.</h6>
                     <div class="d-grip gap-2">
                         <!-- allows adding to car only if is LoggedIn -->
-                        <button type="button" class="btn btn-outline-success" [disabled]="!utilityService.isLoggedIn()" (click)="this.utilityService.addToCart(item)">Add to Cart
+                        <button type="button" class="btn btn-outline-success" [disabled]="!utilityService.isLoggedIn()"
+                            (click)="this.utilityService.addToCart(item)">Add to Cart
                             <span *ngIf="utilityService.isLoggedIn()">(Login First)</span>
                         </button>
                     </div>
@@ -64,11 +66,12 @@
         <div class="row g-0">
             <div class="col-12 ps-5 pt-4 pb-3">
                 <h3 class="border border-secondary text-center py-2 my-rounded-corner w-25">Related Products</h3>
-                <div>  
+                <!-- Working -->
+                <!-- <div>
                     category: {{item.itemCategory.category}}
                     artist: {{item.itemCategory.artistCategory}}
                     id: {{item.id}}
-                </div>
+                </div> -->
             </div>
 
             <div class="col-12">
@@ -88,7 +91,8 @@
                         Send feedback!
                     </button>
                     <div>
-                        <h6 class="text-danger mt-4" *ngIf="!utilityService.isLoggedIn()">Login first, before sending us your feedback.</h6>
+                        <h6 class="text-danger mt-4" *ngIf="!utilityService.isLoggedIn()">Login first, before sending us
+                            your feedback.</h6>
                         <h6 class="text-danger" *ngIf="showError">Feedback cannot be null!</h6>
                         <h6 class="text-success" *ngIf="feedbackSaved">Feedback saved succefully!</h6>
                     </div>

@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { PaymentMethod } from '../models/payment-method';
 import { Payment } from '../models/payment';
 import { Order } from '../models/order';
+import { Item } from '../models/item';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class NavigationService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(){
+  getUsers() {
     return this.http.get<any>(this.usersUrl + 'GetAllUser');
   }
 
@@ -26,7 +27,7 @@ export class NavigationService {
 
   addUser(user: User) {
     let url = this.usersUrl + "AddUser";
-    const headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
+    const headers = { 'Content-Type': 'application/json', 'charset': 'utf-8' }
     const requestBody = {
       id: user.id,
       fullName: user.fullName,
@@ -35,7 +36,7 @@ export class NavigationService {
       Role: user.roles
     };
     console.log("Request Body: ", requestBody);
-    return this.http.post(url, requestBody, {responseType: 'text'})
+    return this.http.post(url, requestBody, { responseType: 'text' })
       .pipe(
         tap(response => console.log("Add User Response: ", response)),
         catchError(error => {
@@ -44,14 +45,14 @@ export class NavigationService {
         })
       );
   }
-  
+
 
 
   updateUser(user: User) {
     const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
     return this.http.put<User>(url, user);
   }
-  
+
   // updateUserRole(user: User, newRole: string) {
   //   const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
   //   const requestBody = `"${newRole}"`
@@ -62,7 +63,7 @@ export class NavigationService {
   updateUserRole(user: User, newRole: string) {
     const url = `${this.usersUrl}UpdateUserRole/${user.id}`;
     const requestBody = JSON.stringify(newRole);
-    const headers = {'Content-Type': 'application/json', 'charset': 'utf-8'}
+    const headers = { 'Content-Type': 'application/json', 'charset': 'utf-8' }
     return this.http.put<User>(url, requestBody, { headers }).pipe(
       tap((updatedUser) => console.log(updatedUser)),
       catchError((error) => {
@@ -98,7 +99,7 @@ export class NavigationService {
       })
     );
   }
-  
+
   getItems(category: string, artist: string, count: number) {
     return this.http.get<any[]>(this.baseUrl + 'GetItems', {
       params: new HttpParams()
@@ -108,14 +109,48 @@ export class NavigationService {
     });
   }
 
-  getItem(id: number) {
+  // getItem(id: number) {
+  //   let url = this.baseUrl + "GetItem/" + id;
+  //   return this.http.get(url);
+  // }
+
+  getItem(id: number): Observable<Item> {
     let url = this.baseUrl + "GetItem/" + id;
-    return this.http.get(url);
+    return this.http.get<any>(url).pipe(
+      map((item) => {
+        return {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          itemCategory: {
+            id: item.itemCategory.id,
+            category: item.itemCategory.category,
+            artistCategory: item.itemCategory.artist // Update property name here
+          },
+          offer: {
+            id: item.offer.id,
+            title: item.offer.title,
+            discount: item.offer.discount
+          },
+          price: item.price,
+          quantity: item.quantity,
+          imageName: item.imageName
+        } as Item; // Cast the result to the front-end Item model
+      }),
+      tap((res: Item) => {
+        console.log('Fetch Item Result:', res); // Log the result
+      }),
+      catchError((error) => {
+        console.error('Fetch Item Error:', error); // Log the error
+        throw error;
+      })
+    );
   }
+  
 
   registerUser(user: User) {
     let url = this.usersUrl + "Register";
-    return this.http.post(url, user, {responseType: 'text'});
+    return this.http.post(url, user, { responseType: 'text' });
   }
 
   // loginUser(email: string, password: string) {
@@ -128,6 +163,10 @@ export class NavigationService {
   // }
 
   submitFeedback(userid: number, itemid: number, feedback: string) {
+    console.log('Submitting feedback - User ID:', userid);
+    console.log('Submitting feedback - Item ID:', itemid);
+    console.log('Submitting feedback - Feedback Value:', feedback);
+
     let obj: any = {
       User: {
         Id: userid,
@@ -139,17 +178,98 @@ export class NavigationService {
     };
 
     let url = this.baseUrl + "InsertFeedback";
-    return this.http.post(url, obj, { responseType: 'text' });
+    return this.http.post(url, obj, { responseType: 'text' }).pipe(
+      tap((res) => {
+        console.log('Submit Feedback Result:', res); // Log the result
+      }),
+      catchError((error) => {
+        console.error('Submit Feedback Error:', error); // Log the error
+        throw error;
+      })
+    );
   }
 
-  getAllFeedbacksOfItem(itemId: number) {
+  // getAllFeedbacksOfItem(itemId: number) {
+  //   console.log('Getting feedbacks for Item ID:', itemId);
+
+  //   let url = this.baseUrl + 'GetItemFeedbacks/' + itemId;
+  //   return this.http.get(url).pipe(
+  //     tap((res: any) => {
+  //       console.log('Fetch All Feedbacks Result:', res); // Log the result
+  //     }),
+  //     catchError((error) => {
+  //       console.error('Fetch All Feedbacks Error:', error); // Log the error
+  //       throw error;
+  //     })
+  //   );
+  // }
+
+  getAllFeedbacksOfItem(itemId: number): Observable<any[]> {
+    console.log('Getting feedbacks for Item ID:', itemId);
+  
     let url = this.baseUrl + 'GetItemFeedbacks/' + itemId;
-    return this.http.get(url);
+    return this.http.get<any[]>(url).pipe(
+      map((feedbacks) => {
+        return feedbacks.map((feedback) => {
+          return {
+            id: feedback.id,
+            user: {
+              id: feedback.user.id,
+              fullName: feedback.user.fullName,
+              dateCreated: feedback.user.dateCreated,
+              dateModified: feedback.user.dateModified,
+              userName: feedback.user.userName,
+              normalizedUserName: feedback.user.normalizedUserName,
+              email: feedback.user.email,
+              normalizedEmail: feedback.user.normalizedEmail,
+              emailConfirmed: feedback.user.emailConfirmed,
+              passwordHash: feedback.user.passwordHash,
+              securityStamp: feedback.user.securityStamp,
+              concurrencyStamp: feedback.user.concurrencyStamp,
+              phoneNumber: feedback.user.phoneNumber,
+              phoneNumberConfirmed: feedback.user.phoneNumberConfirmed,
+              twoFactorEnabled: feedback.user.twoFactorEnabled,
+              lockoutEnd: feedback.user.lockoutEnd,
+              lockoutEnabled: feedback.user.lockoutEnabled,
+              accessFailedCount: feedback.user.accessFailedCount
+            },
+            item: {
+              id: feedback.item.id,
+              title: feedback.item.title,
+              description: feedback.item.description,
+              itemCategory: {
+                id: feedback.item.itemCategory.id,
+                category: feedback.item.itemCategory.category,
+                artistCategory: feedback.item.itemCategory.artist
+              },
+              offer: {
+                id: feedback.item.offer.id,
+                title: feedback.item.offer.title,
+                discount: feedback.item.offer.discount
+              },
+              price: feedback.item.price,
+              quantity: feedback.item.quantity,
+              imageName: feedback.item.imageName
+            },
+            value: feedback.value,
+            createdAt: feedback.createdAt
+          };
+        });
+      }),
+      tap((res: any[]) => {
+        console.log('Fetch All Feedbacks Result:', res); // Log the result
+      }),
+      catchError((error) => {
+        console.error('Fetch All Feedbacks Error:', error); // Log the error
+        throw error;
+      })
+    );
   }
 
-  addToCart(userid: number, itemid: number){
+
+  addToCart(userid: number, itemid: number) {
     let url = this.baseUrl + 'InsertCartItem/' + userid + '/' + itemid;
-    return this.http.post(url, null, {responseType: 'text'});
+    return this.http.post(url, null, { responseType: 'text' });
   }
 
   getActiveCartOfUser(userid: number) {
@@ -168,7 +288,7 @@ export class NavigationService {
   }
 
   insertPayment(payment: Payment) {
-    return this.http.post(this.baseUrl + 'InsertPayment', payment, {responseType: 'text'});
+    return this.http.post(this.baseUrl + 'InsertPayment', payment, { responseType: 'text' });
   }
 
   insertOrder(order: Order) {
