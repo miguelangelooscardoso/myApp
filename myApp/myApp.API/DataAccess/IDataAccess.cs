@@ -8,6 +8,7 @@ namespace myApp.API.DataAccess
         List<ItemCategory> GetItemCategories();
         ItemCategory GetItemCategory(int id);
         Offer GetOffer(int id);
+        List<Offer> GetAllOffers();
         List<Item> GetItems(string category, string artist, int count);
         List<Item> GetItemsByCategory(string category, string artist);
         List<Item> GetAllItems();

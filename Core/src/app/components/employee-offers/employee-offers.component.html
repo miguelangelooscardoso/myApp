@@ -1,0 +1,28 @@
+<section class="m-3 p-4 border border-dark rounded-3 text-center">
+    <h2 class="mb-4">Offers List</h2>
+</section>
+<div class="table-responsive d-flex justify-content-center">
+    <!-- <table class="table table-striped" style="max-width: 600px;"> -->
+        <table class="table table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Discount</th>
+                <th>Action</th> <!-- Added a new column for Action -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let offer of offers">
+                <td>{{ offer.id }}</td>
+                <td>{{ offer.title }}</td>
+                <td>{{ offer.discount }}</td>
+                <td>
+                    <!-- <button class="btn btn-danger" (click)="deleteOffer(offer.id)">Delete</button> -->
+                    <button class="btn btn-danger">Delete</button>
+                </td> <!-- Added a new column for Delete button -->
+            </tr>
+        </tbody>
+    </table>
+</div>

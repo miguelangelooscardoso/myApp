@@ -47,6 +47,34 @@ namespace myApp.API.DataAccess
             return offer;
         }
 
+        public List<Offer> GetAllOffers()
+        {
+            List<Offer> offers = new List<Offer>();
+
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+
+                string query = "SELECT * FROM Offers;";
+                command.CommandText = query;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Offer offer = new Offer();
+                    offer.Id = Convert.ToInt32(reader["OfferID"]);
+                    offer.Title = Convert.ToString(reader["Title"]);
+                    offer.Discount = Convert.ToInt32(reader["Discount"]);
+
+                    offers.Add(offer);
+                }
+            }
+
+            return offers;
+        }
+
         public List<ItemCategory> GetItemCategories()
         {
             var itemCategories = new List<ItemCategory>();

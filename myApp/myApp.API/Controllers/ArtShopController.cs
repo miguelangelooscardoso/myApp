@@ -44,6 +44,13 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetAllOffers")]
+        public IActionResult GetAllOffers()
+        {
+            var result = dataAccess.GetAllOffers();
+            return Ok(result);
+        }
+
         [HttpGet("GetItemsByCategory")]
         public IActionResult GetItemsByCategory(string category, string artist)
         {

@@ -151,7 +151,11 @@ export class NavigationService {
     );
   }
 
-
+  getAllOffers() {
+    return this.http.get<any[]>(this.baseUrl + 'GetAllOffers', {
+      params: new HttpParams()
+    });
+  }
 
   // getItem(id: number) {
   //   let url = this.baseUrl + "GetItem/" + id;

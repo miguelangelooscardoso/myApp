@@ -10,6 +10,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AddUsersComponent } from './components/add-users/add-users.component';
 import { EmployeeItemsComponent } from './components/employee-items/employee-items.component';
 import { EmployeeCategoriesComponent } from './components/employee-categories/employee-categories.component';
+import { EmployeeOffersComponent } from './components/employee-offers/employee-offers.component';
 // import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'addusers', component: AddUsersComponent},
   { path: 'listofitems', component: EmployeeItemsComponent},
   { path: 'listofcategories', component: EmployeeCategoriesComponent},
+  { path: 'listofoffers', component: EmployeeOffersComponent},
 
   // { path: 'track', component: OrderTrackingComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
