@@ -109,6 +109,50 @@ export class NavigationService {
     });
   }
 
+  // getAllItems() {
+  //   return this.http.get<any[]>(this.baseUrl + 'GetAllItems', {
+  //     params: new HttpParams()
+  //   });
+  // }
+
+  getAllItems(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + 'GetAllItems', {
+      params: new HttpParams()
+    }).pipe(
+      map((items) => {
+        return items.map((item) => {
+          return {
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            itemCategory: {
+              id: item.itemCategory.id,
+              category: item.itemCategory.category,
+              artistCategory: item.itemCategory.artist // Update property name here
+            },
+            offer: {
+              id: item.offer.id,
+              title: item.offer.title,
+              discount: item.offer.discount
+            },
+            price: item.price,
+            quantity: item.quantity,
+            imageName: item.imageName
+          };
+        });
+      }),
+      tap((res: any[]) => {
+        console.log('Fetch All Items Result:', res); // Log the result
+      }),
+      catchError((error) => {
+        console.error('Fetch All Items Error:', error); // Log the error
+        throw error;
+      })
+    );
+  }
+
+
+
   // getItem(id: number) {
   //   let url = this.baseUrl + "GetItem/" + id;
   //   return this.http.get(url);
@@ -146,7 +190,7 @@ export class NavigationService {
       })
     );
   }
-  
+
 
   registerUser(user: User) {
     let url = this.usersUrl + "Register";
@@ -206,7 +250,7 @@ export class NavigationService {
 
   getAllFeedbacksOfItem(itemId: number): Observable<any[]> {
     console.log('Getting feedbacks for Item ID:', itemId);
-  
+
     let url = this.baseUrl + 'GetItemFeedbacks/' + itemId;
     return this.http.get<any[]>(url).pipe(
       map((feedbacks) => {

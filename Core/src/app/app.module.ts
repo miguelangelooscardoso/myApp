@@ -25,6 +25,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AddUsersComponent } from './components/add-users/add-users.component';
 import { EmployeeItemsComponent } from './components/employee-items/employee-items.component';
+import { EmployeeCategoriesComponent } from './components/employee-categories/employee-categories.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { EmployeeItemsComponent } from './components/employee-items/employee-ite
     AdminUsersComponent,
     AddUsersComponent,
     EmployeeItemsComponent,
+    EmployeeCategoriesComponent,
   ],
   imports: [
     BrowserModule,

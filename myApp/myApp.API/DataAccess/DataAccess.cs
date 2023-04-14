@@ -143,6 +143,88 @@ namespace myApp.API.DataAccess
             return items;
         }
 
+        public List<Item> GetItemsByCategory(string category, string artist)
+        {
+            var items = new List<Item>();
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection
+                };
+
+                string query = "SELECT * FROM Items WHERE CategoryId=(SELECT CategoryId FROM ItemCategories WHERE Category=@c AND Artist=@s) ORDER BY newid();";
+                command.CommandText = query;
+                command.Parameters.Add("@c", System.Data.SqlDbType.NVarChar).Value = category;
+                command.Parameters.Add("@s", System.Data.SqlDbType.NVarChar).Value = artist;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var item = new Item()
+                    {
+                        Id = (int)reader["ItemId"],
+                        Title = (string)reader["Title"],
+                        Description = (string)reader["Description"],
+                        Price = (double)reader["Price"],
+                        Quantity = (int)reader["Quantity"],
+                        ImageName = (string)reader["ImageName"]
+                    };
+
+                    var categoryid = (int)reader["CategoryId"];
+                    item.ItemCategory = GetItemCategory(categoryid);
+
+                    var offerid = (int)reader["OfferId"];
+                    item.Offer = GetOffer(offerid);
+
+                    items.Add(item);
+                }
+            }
+            return items;
+        }
+
+        public List<Item> GetAllItems()
+        {
+            var items = new List<Item>();
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection
+                };
+
+                string query = "SELECT * FROM Items ORDER BY newid();";
+                command.CommandText = query;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    var item = new Item()
+                    {
+                        Id = (int)reader["ItemId"],
+                        Title = (string)reader["Title"],
+                        Description = (string)reader["Description"],
+                        Price = (double)reader["Price"],
+                        Quantity = (int)reader["Quantity"],
+                        ImageName = (string)reader["ImageName"]
+                    };
+
+                    var categoryid = (int)reader["CategoryId"];
+                    item.ItemCategory = GetItemCategory(categoryid);
+
+                    var offerid = (int)reader["OfferId"];
+                    item.Offer = GetOffer(offerid);
+
+                    items.Add(item);
+                }
+            }
+            return items;
+        }
+
+
+
         public Item GetItem(int id)
         {
             var item = new Item();

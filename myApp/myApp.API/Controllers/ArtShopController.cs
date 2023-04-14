@@ -37,6 +37,20 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetAllItems")]
+        public IActionResult GetAllItems()
+        {
+            var result = dataAccess.GetAllItems();
+            return Ok(result);
+        }
+
+        [HttpGet("GetItemsByCategory")]
+        public IActionResult GetItemsByCategory(string category, string artist)
+        {
+            var result = dataAccess.GetItemsByCategory(category, artist);
+            return Ok(result);
+        }
+
         [HttpGet("GetItem/{id}")]
         public IActionResult GetItem(int id)
         {
@@ -124,6 +138,7 @@ namespace myApp.API.Controllers
             var id = dataAccess.InsertOrder(order);
             return Ok(id.ToString());
         }
+
     }
 }
 

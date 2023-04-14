@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AddUsersComponent } from './components/add-users/add-users.component';
 import { EmployeeItemsComponent } from './components/employee-items/employee-items.component';
+import { EmployeeCategoriesComponent } from './components/employee-categories/employee-categories.component';
 // import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 const routes: Routes = [
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'users', component: AdminUsersComponent},
   { path: 'addusers', component: AddUsersComponent},
   { path: 'listofitems', component: EmployeeItemsComponent},
+  { path: 'listofcategories', component: EmployeeCategoriesComponent},
+
   // { path: 'track', component: OrderTrackingComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

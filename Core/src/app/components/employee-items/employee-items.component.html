@@ -6,17 +6,23 @@
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
-                <th>Category</th>
+                <th>Title</th>
                 <th>Artist</th>
-                <!-- <th>Description</th> -->
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let category of categories" [ngClass]="category.category">
-                <td>{{ category.id }}</td>
-                <td>{{ category.category }}</td>
-                <td>{{ category.artistCategory }}</td>
-                <!-- <td>{{ category.description }}</td> -->
+            <tr *ngFor="let item of items" [ngClass]="item.itemCategory.category">
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.itemCategory.artistCategory }}</td>
+                <td>{{ item.itemCategory.category }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.offer.title }}</td>
             </tr>
         </tbody>
     </table>

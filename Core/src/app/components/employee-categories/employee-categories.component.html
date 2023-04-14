@@ -1,0 +1,30 @@
+<section class="m-3 p-4 border border-dark rounded-3 text-center">
+    <h2 class="mb-4">Categories List</h2>
+</section>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Artist</th>
+                <!-- <th>Description</th> -->
+                <th>Action</th> <!-- Add a table header for the action column -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of categories" [ngClass]="category.category">
+                <td>{{ category.id }}</td>
+                <td>{{ category.category }}</td>
+                <td>{{ category.artistCategory }}</td>
+                <!-- <td>{{ category.description }}</td> -->
+                <td>
+                    <!-- <button class="btn btn-danger" (click)="deleteCategory(category.id)">Delete</button> -->
+                    <button class="btn btn-danger">Delete</button>
+
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
