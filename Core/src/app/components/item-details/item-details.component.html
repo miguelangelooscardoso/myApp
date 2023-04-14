@@ -13,13 +13,21 @@
                 <img src="../../assets/Items/{{item.id}}/{{imageIndex}}.jpeg" alt="" class="w-100">
             </div>
 
-            <div class="image-thumbnails mt-4 d-flex justify-content-between align-items-center">
+            <!-- <div class="image-thumbnails mt-4 d-flex justify-content-between align-items-center">
                 <img src="../../assets/Items/{{item.id}}/1.jpeg" alt="Thumbnail Image" (click)="imageIndex = 1">
                 <img src="../../assets/Items/{{item.id}}/2.jpeg" alt="Thumbnail Image" (click)="imageIndex = 2">
                 <img src="../../assets/Items/{{item.id}}/3.jpeg" alt="Thumbnail Image" (click)="imageIndex = 3">
                 <img src="../../assets/Items/{{item.id}}/4.jpeg" alt="Thumbnail Image" (click)="imageIndex = 4">
                 <img src="../../assets/Items/{{item.id}}/5.jpeg" alt="Thumbnail Image" (click)="imageIndex = 5">
-            </div>
+            </div> -->
+            <div class="image-thumbnails mt-4 d-flex justify-content-between align-items-center">
+                <img *ngIf="isImageAvailable(item.id, 1)" src="../../assets/Items/{{item.id}}/1.jpeg" alt="Thumbnail Image" (click)="imageIndex = 1">
+                <img *ngIf="isImageAvailable(item.id, 2)" src="../../assets/Items/{{item.id}}/2.jpeg" alt="Thumbnail Image" (click)="imageIndex = 2">
+                <img *ngIf="isImageAvailable(item.id, 3)" src="../../assets/Items/{{item.id}}/3.jpeg" alt="Thumbnail Image" (click)="imageIndex = 3">
+                <img *ngIf="isImageAvailable(item.id, 4)" src="../../assets/Items/{{item.id}}/4.jpeg" alt="Thumbnail Image" (click)="imageIndex = 4">
+                <img *ngIf="isImageAvailable(item.id, 5)" src="../../assets/Items/{{item.id}}/5.jpeg" alt="Thumbnail Image" (click)="imageIndex = 5">
+              </div>
+              
         </div>
 
         <!-- Details of Product -->
@@ -94,9 +102,8 @@
                         <h6 class="text-danger mt-4" *ngIf="!utilityService.isLoggedIn()">Login first, before sending us
                             your feedback.</h6>
                         <h6 class="text-danger" *ngIf="showError">Feedback cannot be null!</h6>
-                        <h6 class="text-success" *ngIf="feedbackSaved">Feedback saved succefully!</h6>
+                        <h6 class="text-success" *ngIf="feedbackSaved">Feedback saved successfully!</h6>
                     </div>
-
                 </div>
             </div>
             <!-- Other Review -->

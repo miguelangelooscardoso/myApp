@@ -79,4 +79,12 @@ export class ItemDetailsComponent implements OnInit {
         }
       );
   }
+
+  isImageAvailable(itemId: number, imageIndex: number): boolean {
+    const imageName = `${itemId}/${imageIndex}.jpeg`;
+    const image = new Image();
+    image.src = `../../assets/Items/${imageName}`;
+    return image.width > 0 && image.height > 0;
+  }
+  
 }
