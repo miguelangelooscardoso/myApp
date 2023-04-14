@@ -8,6 +8,7 @@ import { OrderComponent } from './components/order/order.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AddUsersComponent } from './components/add-users/add-users.component';
+import { EmployeeItemsComponent } from './components/employee-items/employee-items.component';
 // import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'orders', component: OrderComponent },
   { path: 'users', component: AdminUsersComponent},
   { path: 'addusers', component: AddUsersComponent},
+  { path: 'listofitems', component: EmployeeItemsComponent},
   // { path: 'track', component: OrderTrackingComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
