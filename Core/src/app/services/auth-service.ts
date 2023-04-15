@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 
@@ -30,10 +30,43 @@ export class AuthService {
             tap(({ token, user }) => {
                 const payload = JSON.parse(atob(token.split('.')[1]));
                 const userId = payload.sub;
+                console.log('Payload:', payload); // Added console log to log the payload
                 this.userSubject.next({ id: userId, ...user });
             })
         );
     }
+
+    checkRole(email: string, password: string): Observable<User> {
+        const url = `${this.authUrl}/login`;
+        return this.http.post<{ id: number, fullName: string, email: string, role: string, token: string }>(
+            url,
+            { email, password },
+        ).pipe(
+            map(({ id, fullName, email, role }: { id: number, fullName: string, email: string, role: string }) => {
+                const user: User = {
+                    id,
+                    fullName,
+                    email,
+                    password: '', // Set to empty string as it's missing in the response
+                    roles: [role] // Assign role as an array to the roles property of User object
+                };
+                return user;
+            }),
+            tap(({ id, fullName, email, roles }) => {
+                console.log('ID:', id);
+                console.log('Full Name:', fullName);
+                console.log('Email:', email);
+                console.log('Roles:', roles);
+            })
+        );
+    }
+    
+    
+    
+    
+    
+    
+    
 
     get currentUser(): User | null {
         return this.userSubject.value;
@@ -60,7 +93,7 @@ export class AuthService {
         localStorage.setItem('token', tokenValue)
     }
 
-    getToken(){
+    getToken() {
         return localStorage.getItem('token')
     }
 

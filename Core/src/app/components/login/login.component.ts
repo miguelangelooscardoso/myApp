@@ -82,6 +82,7 @@ import { JwtService } from 'src/app/services/jwt-service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AuthService } from 'src/app/services/auth-service';
 import { HttpClient } from '@angular/common/http';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -149,6 +150,12 @@ export class LoginComponent implements OnInit {
           // "The inspected token doesn't appear to be a JWT."
           this.utilityService.setUser(this.jwtToken);
           console.log(this.utilityService.getUser());
+
+          // Call checkRole() from AuthService and log role information
+          this.authService.checkRole(this.Email.value, this.PWD.value)
+            .subscribe((user: User) => {
+              console.log('Role:', user.roles[0]); // Log the role of the user
+            });
         }
       });
   }

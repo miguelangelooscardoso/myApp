@@ -201,7 +201,7 @@ namespace myApp.API.Controllers
                     userDTO.FullName = tempUser.FullName;
                     userDTO.Role = role;
                     userDTO.Email = tempUser.Email;
-                    userDTO.Token = GenerateToken(tempUser);
+                    userDTO.Token = GenerateToken(tempUser); // Pass appuser to GenerateToken method
 
                     return userDTO;
                 }
@@ -215,6 +215,7 @@ namespace myApp.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         //[Authorize]
         [HttpGet("GetAllUser")]
@@ -424,11 +425,12 @@ namespace myApp.API.Controllers
         private string GenerateToken(AppUser appuser)
         {
             var claims = new List<System.Security.Claims.Claim>
-    {
-        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Sub, appuser.Id.ToString()),
-        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Name, appuser.UserName),
-        new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-    };
+        {
+            new System.Security.Claims.Claim(JwtRegisteredClaimNames.Sub, appuser.Id.ToString()),
+            new System.Security.Claims.Claim(JwtRegisteredClaimNames.Name, appuser.UserName),
+            new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new System.Security.Claims.Claim("role", "User") // Use a constant role value
+        };
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Constants.SECRET_KEY));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -439,10 +441,11 @@ namespace myApp.API.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddDays(30),
                 signingCredentials: cred
-                );
+            );
+
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 }
+
 
