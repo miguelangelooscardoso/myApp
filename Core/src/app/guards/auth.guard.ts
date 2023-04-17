@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
       take(1),
       map((currentUserRole: string) => {
         if (this.authService.currentUser) {
-          if (currentUserRole === 'User') {
+          if (currentUserRole === 'User' || currentUserRole === 'Employee' || currentUserRole === 'Admin') {
             return true;
           } else {
             this.router.navigate(['/pagenotfound']);
@@ -26,10 +26,10 @@ export class AuthGuard implements CanActivate {
           // login is a form i.e. doesn't open over the page
           // this.router.navigate(['/login']);
           this.router.navigate(['/pagenotfound']);
-
           return false;
         }
       })
     );
   }
 }
+

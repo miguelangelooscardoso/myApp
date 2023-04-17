@@ -14,7 +14,7 @@
                         <li class="text-center fw-bold">{{item.category | titlecase}}</li>
                         <li *ngFor="let artist of item.artists" [style.cursor]="'pointer'">
                             <a class="dropdown-item" OpenItems
-                               [category]="{id: 0, 'category': item.category, 'artistCategory': artist}">
+                                [category]="{id: 0, 'category': item.category, 'artistCategory': artist}">
                                 {{artist | titlecase}}
                             </a>
                         </li>
@@ -27,19 +27,37 @@
         </div>
         <div class="btn-group btn-group-lg me-2" role="group">
             <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#generalmodal"
-                    (click)="openModal('login')" *ngIf="!utilityService.isLoggedIn()">Login</button>
+                (click)="openModal('login')" *ngIf="!utilityService.isLoggedIn()">Login</button>
             <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#generalmodal"
-                    (click)="openModal('register')" *ngIf="!utilityService.isLoggedIn()">Register</button>
-            <button type="button" class="btn btn-outline-light" *ngIf="utilityService.isLoggedIn()  && userRole === 'User'">Account</button>
+                (click)="openModal('register')" *ngIf="!utilityService.isLoggedIn()">Register</button>
+            <button type="button" class="btn btn-outline-light"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'User'">Account</button>
+
+            <!-- User panel -->
             <button type="button" class="btn btn-outline-light" routerLink="/cart"
-                    *ngIf="utilityService.isLoggedIn() && userRole === 'User'">
-                    Cart
-                    <span class="badge bg-warning text-dark">{{cartItems}}</span>
-                </button>
+                *ngIf="utilityService.isLoggedIn() && userRole === 'User'">
+                Cart
+                <span class="badge bg-warning text-dark">{{cartItems}}</span>
+            </button>
             <button type="button" class="btn btn-outline-light" routerLink="/orders"
-                    *ngIf="utilityService.isLoggedIn() && userRole === 'User'">Orders</button>
+                *ngIf="utilityService.isLoggedIn() && userRole === 'User'">Orders</button>
+
+            <!-- Employee panel -->
+            <button type="button" class="btn btn-outline-light" routerLink="/listofitems"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'Employee'">Items</button>
+            <button type="button" class="btn btn-outline-light" routerLink="/listofcategories"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'Employee'">Categories</button>
+            <button type="button" class="btn btn-outline-light" routerLink="/listofoffers"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'Employee'">Offers</button>
+
+            <!-- Admin panel -->
+            <button type="button" class="btn btn-outline-light" routerLink="/addusers"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'Admin'">Add User</button>
+            <button type="button" class="btn btn-outline-light" routerLink="/users"
+                *ngIf="utilityService.isLoggedIn()  && userRole === 'Admin'">Users</button>
+
             <button type="button" class="btn btn-outline-light" (click)="utilityService.logoutUser()"
-                    *ngIf="utilityService.isLoggedIn()">Logout</button>
+                *ngIf="utilityService.isLoggedIn()">Logout</button>
         </div>
 
 
