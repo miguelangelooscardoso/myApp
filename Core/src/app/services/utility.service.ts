@@ -6,6 +6,7 @@ import { Item } from '../models/item';
 import { Payment } from '../models/payment';
 import { User } from '../models/user';
 import { NavigationService } from './navigation.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,10 @@ import { NavigationService } from './navigation.service';
 export class UtilityService {
   changeCart = new Subject();
 
-  constructor(    
+  constructor(
     private navigationService: NavigationService,
-    private jwt: JwtHelperService) { }
+    private jwt: JwtHelperService,
+    private router: Router) { }
 
   applyDiscount(price: number, discount: number): number {
     let finalPrice: number = price - price * (discount / 100);
@@ -51,7 +53,7 @@ export class UtilityService {
       roles: token.role
     };
     return user;
-  }  
+  }
 
   setUser(token: string) {
     localStorage.setItem('user', token);
@@ -63,6 +65,9 @@ export class UtilityService {
 
   logoutUser() {
     localStorage.removeItem('user');
+    // Add logic for redirection to home page
+    // For example, using Angular Router:
+    this.router.navigate(['/home']);
   }
 
   addToCart(item: Item) {

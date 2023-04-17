@@ -5,6 +5,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-header',
@@ -17,34 +18,13 @@ export class HeaderComponent implements OnInit {
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
   cartItems: number = 0;
-
-  // navigationList: NavigationItem[] = [
-  //   {
-  //     category: 'ceramics',
-  //     artists: ["Nina Malterud", "Maria Kristofersson"]
-  //   },
-  //   {
-  //     category: 'glass',
-  //     artists: ["Celia Dowson", "Edmond Byrne", "Michéle Oberdieck"]
-  //   },
-  //   {
-  //     category: 'painting',
-  //     artists: ["Hola Lou", "Ricardo Machado"]
-  //   },
-  //   {
-  //     category: 'sculpture',
-  //     artists: ["AkaCorleone", "André Saraiva", "Vhils", "Vitor Reis"]
-  //   },
-  //   {
-  //     category: 'textile',
-  //     artists: ["Claire Benn", "Maria Sigma"]
-  //   }
-  // ];
+  userRole: string = ''; // Add userRole property to store the role value
 
   constructor(
     private navigationService: NavigationService,
-    public utilityService: UtilityService
-    ) {
+    public utilityService: UtilityService,
+    private roleService: RoleService
+  ) {
   }
 
   ngOnInit(): void {
@@ -80,6 +60,11 @@ export class HeaderComponent implements OnInit {
       if (parseInt(res) === 0) this.cartItems = 0;
       else this.cartItems += parseInt(res);
     });
+
+    // Call checkRole() from RoleService and get role information
+    this.roleService.role$.subscribe((role: string) => {
+      this.userRole = role; // Store the role value in userRole property
+    });
   }
 
   // Modal inside OnInit
@@ -99,6 +84,3 @@ export class HeaderComponent implements OnInit {
     this.container.createComponent(componentType);
   }
 }
-
-
-
