@@ -11,14 +11,15 @@ import { AddUsersComponent } from './components/add-users/add-users.component';
 import { EmployeeItemsComponent } from './components/employee-items/employee-items.component';
 import { EmployeeCategoriesComponent } from './components/employee-categories/employee-categories.component';
 import { EmployeeOffersComponent } from './components/employee-offers/employee-offers.component';
+import { AuthGuard } from './guards/auth.guard';
 // import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'items', component: ItemsComponent },
   { path: 'item-details', component: ItemDetailsComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'orders', component: OrderComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard]  },
+  { path: 'orders', component: OrderComponent, canActivate: [AuthGuard]  },
   { path: 'users', component: AdminUsersComponent},
   { path: 'addusers', component: AddUsersComponent},
   { path: 'listofitems', component: EmployeeItemsComponent},
