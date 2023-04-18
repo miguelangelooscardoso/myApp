@@ -12,6 +12,8 @@ import { NavigationService } from 'src/app/services/navigation.service';
 export class EmployeeCategoriesComponent {
   categories: Category[] = [];
   newCategoryForm!: FormGroup;
+  currentPage = 1;
+  itemsPerPage = 5;
 
   constructor(private router: Router, private navigationService: NavigationService) { }
 
@@ -83,6 +85,26 @@ export class EmployeeCategoriesComponent {
       console.log('Invalid form');
     }
   }
-  
 
+  getPaginatedCategories(): Category[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.categories.slice(startIndex, endIndex);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+  }
+
+  updatePage(pageNumber: number): void {
+    this.currentPage = pageNumber;
+  }
+
+  getTotalPages(): number[] {
+    const totalItems = this.categories.length;
+    const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+    return Array.from({length: totalPages}, (_, i) => i + 1);
+  }
 }
+
+
