@@ -536,6 +536,42 @@ namespace myApp.API.DataAccess
             }
         }
 
+        public bool RemoveCartItem(int userId, int itemId)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new()
+                {
+                    Connection = connection
+                };
+
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM Carts WHERE UserId=" + userId + " AND Ordered='false';";
+                command.CommandText = query;
+                int count = (int)command.ExecuteScalar();
+                if (count == 0)
+                {
+                    return false; // Cart does not exist for user
+                }
+
+                query = "SELECT CartId FROM Carts WHERE UserId=" + userId + " AND Ordered='false';";
+                command.CommandText = query;
+                int cartId = (int)command.ExecuteScalar();
+
+                query = "DELETE FROM CartItems WHERE CartId=" + cartId + " AND ItemId=" + itemId + ";";
+                command.CommandText = query;
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    return false; // Item not found in cart
+                }
+
+                return true;
+            }
+        }
+
+
         // Requires GetUser()!!!
         public Cart GetActiveCartOfUser(int userid)
         {

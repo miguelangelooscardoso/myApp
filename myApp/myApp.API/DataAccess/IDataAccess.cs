@@ -19,6 +19,7 @@ namespace myApp.API.DataAccess
         void InsertFeedback(Feedback feedback);
         List<Feedback> GetItemFeedbacks(int itemId);
         bool InsertCartItem(int userid, int itemId);
+        bool RemoveCartItem(int userId, int itemId);
         Cart GetActiveCartOfUser(int userid);
         Cart GetCart(int cartid);
         List<Cart> GetAllPreviousCartsOfUser(int userid);

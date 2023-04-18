@@ -109,6 +109,13 @@ namespace myApp.API.Controllers
             return Ok(result ? "insert" : "not inserted");
         }
 
+        [HttpDelete("RemoveCartItem/{userId}/{itemId}")]
+        public IActionResult RemoveCartItem(int userId, int itemId)
+        {
+            var result = dataAccess.RemoveCartItem(userId, itemId);
+            return Ok(result ? "removed" : "not removed");
+        }
+
         [HttpGet("GetActiveCartOfUser/{id}")]
         public IActionResult GetActiveCartOfUser(int id)
         {

@@ -314,10 +314,14 @@ export class NavigationService {
     );
   }
 
-
   addToCart(userid: number, itemid: number) {
     let url = this.baseUrl + 'InsertCartItem/' + userid + '/' + itemid;
     return this.http.post(url, null, { responseType: 'text' });
+  }
+
+  removeFromCart(userid: number, itemid: number) {
+    const url = this.baseUrl + 'RemoveCartItem/' + userid + '/' + itemid;
+    return this.http.delete(url, { responseType: 'text' });
   }
 
   getActiveCartOfUser(userid: number) {
