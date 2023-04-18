@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
     }
 
     this.utilityService.changeCart.subscribe((res: any) => {
+      console.log('Cart updated:', res); // Add this log statement
       if (parseInt(res) === 0) this.cartItems = 0;
       else this.cartItems += parseInt(res);
     });

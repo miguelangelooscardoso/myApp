@@ -9,6 +9,8 @@ namespace myApp.API.DataAccess
         ItemCategory GetItemCategory(int id);
         Offer GetOffer(int id);
         List<Offer> GetAllOffers();
+        void InsertOffer(Offer offer);
+        void RemoveOffer(int offerId);
         List<Item> GetItems(string category, string artist, int count);
         List<Item> GetItemsByCategory(string category, string artist);
         List<Item> GetAllItems();

@@ -75,6 +75,41 @@ namespace myApp.API.DataAccess
             return offers;
         }
 
+        public void InsertOffer(Offer offer)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+
+                string query = "INSERT INTO Offers (Title, Discount) VALUES (@title, @discount);";
+                command.CommandText = query;
+
+                command.Parameters.AddWithValue("@title", offer.Title);
+                command.Parameters.AddWithValue("@discount", offer.Discount);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void RemoveOffer(int offerId)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+
+                string query = "DELETE FROM Offers WHERE OfferID = @offerId;";
+                command.CommandText = query;
+
+                command.Parameters.AddWithValue("@offerId", offerId);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
         public List<ItemCategory> GetItemCategories()
         {
             var itemCategories = new List<ItemCategory>();

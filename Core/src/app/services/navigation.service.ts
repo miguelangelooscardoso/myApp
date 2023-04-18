@@ -7,6 +7,7 @@ import { PaymentMethod } from '../models/payment-method';
 import { Payment } from '../models/payment';
 import { Order } from '../models/order';
 import { Item } from '../models/item';
+import { Offer } from '../models/offer';
 
 @Injectable({
   providedIn: 'root'
@@ -155,6 +156,14 @@ export class NavigationService {
     return this.http.get<any[]>(this.baseUrl + 'GetAllOffers', {
       params: new HttpParams()
     });
+  }
+
+  addOffer(offer: Offer): Observable<any> {
+    return this.http.post<any>(this.baseUrl + 'AddOffer', offer);
+  }
+
+  removeOffer(offerId: number): Observable<any> {
+    return this.http.delete<any>(this.baseUrl + 'RemoveOffer/' + offerId);
   }
 
   // getItem(id: number) {

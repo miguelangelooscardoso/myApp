@@ -51,6 +51,35 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("AddOffer")]
+        public IActionResult AddOffer([FromBody] Offer offer)
+        {
+            try
+            {
+                dataAccess.InsertOffer(offer);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("RemoveOffer/{offerId}")]
+        public IActionResult RemoveOffer(int offerId)
+        {
+            try
+            {
+                dataAccess.RemoveOffer(offerId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpGet("GetItemsByCategory")]
         public IActionResult GetItemsByCategory(string category, string artist)
         {
