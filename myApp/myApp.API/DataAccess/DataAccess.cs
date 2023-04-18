@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -163,6 +164,45 @@ namespace myApp.API.DataAccess
                 }
             }
             return itemCategory;
+        }
+
+        public void InsertItemCategory(ItemCategory category)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection
+                };
+                string query = "INSERT INTO ItemCategories (Category, Artist) VALUES (@category, @artist);";
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@category", category.Category);
+                command.Parameters.AddWithValue("@artist", category.Artist);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteItemCategory(int categoryId)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection,
+                    CommandType = CommandType.Text,
+                    CommandText = "DELETE FROM ItemCategories WHERE CategoryId = @categoryId;"
+                };
+                command.Parameters.AddWithValue("@categoryId", categoryId);
+
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("Item category not found.");
+                }
+            }
         }
 
         public List<Item> GetItems(string category, string artist, int count)

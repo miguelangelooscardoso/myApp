@@ -101,6 +101,17 @@ export class NavigationService {
     );
   }
 
+  addCategory(category: {id: number, category: string, artist: string}): Observable<any> {
+    const url = this.baseUrl + 'AddCategory';
+    return this.http.post(url, category);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    const url = `${this.baseUrl}DeleteCategory/${id}`;
+    return this.http.delete(url);
+  }
+
+
   getItems(category: string, artist: string, count: number) {
     return this.http.get<any[]>(this.baseUrl + 'GetItems', {
       params: new HttpParams()

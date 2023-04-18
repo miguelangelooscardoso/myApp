@@ -30,6 +30,34 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("AddCategory")]
+        public IActionResult AddCategory([FromBody] ItemCategory category)
+        {
+            try
+            {
+                dataAccess.InsertItemCategory(category);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to add category: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("DeleteCategory/{categoryId}")]
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            try
+            {
+                dataAccess.DeleteItemCategory(categoryId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete category: {ex.Message}");
+            }
+        }
+
         [HttpGet("GetItems")]
         public IActionResult GetItems(string category, string artist, int count)
         {

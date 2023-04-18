@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/models/category';
 import { NavigationService } from 'src/app/services/navigation.service';
 
@@ -9,14 +11,32 @@ import { NavigationService } from 'src/app/services/navigation.service';
 })
 export class EmployeeCategoriesComponent {
   categories: Category[] = [];
+  newCategoryForm!: FormGroup;
 
-  constructor(private navigationService: NavigationService) { }
+  constructor(private router: Router, private navigationService: NavigationService) { }
 
   ngOnInit(): void {
     this.navigationService.getCategoryList().subscribe((categories: Category[]) => {
       this.categories = categories;
       console.log(this.categories); // Log retrieved categories
     });
+    // Define newCategoryForm here
+    this.newCategoryForm = new FormGroup({
+      category: new FormControl('', [Validators.required]),
+      artistCategory: new FormControl('', [Validators.required]),
+      // description: new FormControl('', [Validators.required])
+    });
+
+  }
+
+  deleteCategory(categoryId: number) {
+    if (confirm("Are you sure you want to delete this category?")) {
+      this.navigationService.deleteCategory(categoryId).subscribe(() => {
+        console.log(`Category with ID ${categoryId} deleted.`);
+        // Remove the following line:
+        // this.loadCategories();
+      });
+    }
   }
 
   // deleteCategory(id: number): void {
@@ -39,7 +59,30 @@ export class EmployeeCategoriesComponent {
   //           return 'category2-class';
   //       default:
   //           return '';
+  //   }
   // }
 
+  addNewCategory(): void {
+    if (this.newCategoryForm.valid) {
+      const category = {
+        id: 0,
+        category: this.newCategoryForm.controls['category'].value,
+        artist: this.newCategoryForm.controls['artistCategory'].value,
+      };
+      this.navigationService.addCategory(category).subscribe(() => {
+        console.log('Category added successfully');
+        this.newCategoryForm.reset();
+        // reload the category list
+        this.navigationService.getCategoryList().subscribe((categories: Category[]) => {
+          this.categories = categories;
+        });
+      }, (error) => {
+        console.error('Failed to add category:', error);
+      });
+    } else {
+      console.log('Invalid form');
+    }
+  }
+  
 
 }
