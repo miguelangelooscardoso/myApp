@@ -326,6 +326,75 @@ namespace myApp.API.DataAccess
             return items;
         }
 
+        public int InsertItem(Item item)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection
+                };
+
+                // Check if item category exists
+                string categoryQuery = "SELECT COUNT(*) FROM ItemCategories WHERE Category = @category AND Artist = @artist;";
+                command.CommandText = categoryQuery;
+                command.Parameters.AddWithValue("@category", item.ItemCategory.Category);
+                command.Parameters.AddWithValue("@artist", item.ItemCategory.Artist);
+                connection.Open();
+                int categoryCount = (int)command.ExecuteScalar();
+
+                // Check if offer exists
+                string offerQuery = "SELECT COUNT(*) FROM Offers WHERE Title = @title AND Discount = @discount;";
+                command.CommandText = offerQuery;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@title", item.Offer.Title);
+                command.Parameters.AddWithValue("@discount", item.Offer.Discount);
+                int offerCount = (int)command.ExecuteScalar();
+
+                if (categoryCount == 0)
+                {
+                    throw new Exception("Invalid item category");
+                }
+
+                if (offerCount == 0)
+                {
+                    throw new Exception("Invalid offer");
+                }
+
+                // Get CategoryId and OfferId
+                string categorySelectQuery = "SELECT CategoryId FROM ItemCategories WHERE Category = @category AND Artist = @artist;";
+                command.CommandText = categorySelectQuery;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@category", item.ItemCategory.Category);
+                command.Parameters.AddWithValue("@artist", item.ItemCategory.Artist);
+                int categoryId = (int)command.ExecuteScalar();
+
+                string offerSelectQuery = "SELECT OfferId FROM Offers WHERE Title = @title AND Discount = @discount;";
+                command.CommandText = offerSelectQuery;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@title", item.Offer.Title);
+                command.Parameters.AddWithValue("@discount", item.Offer.Discount);
+                int offerId = (int)command.ExecuteScalar();
+
+                // Insert item
+                string itemQuery = "INSERT INTO Items (Title, Description, Price, Quantity, ImageName, CategoryId, OfferId) " +
+                                    "VALUES (@title, @description, @price, @quantity, @imageName, @categoryId, @offerId);" +
+                                    "SELECT CAST(scope_identity() AS int);";
+                command.CommandText = itemQuery;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@title", item.Title);
+                command.Parameters.AddWithValue("@description", item.Description);
+                command.Parameters.AddWithValue("@price", item.Price);
+                command.Parameters.AddWithValue("@quantity", item.Quantity);
+                command.Parameters.AddWithValue("@imageName", item.ImageName);
+                command.Parameters.AddWithValue("@categoryId", categoryId);
+                command.Parameters.AddWithValue("@offerId", offerId);
+
+                int itemId = (int)command.ExecuteScalar();
+
+                return itemId;
+            }
+        }
 
 
         public Item GetItem(int id)

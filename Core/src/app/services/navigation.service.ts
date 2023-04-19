@@ -101,7 +101,7 @@ export class NavigationService {
     );
   }
 
-  addCategory(category: {id: number, category: string, artist: string}): Observable<any> {
+  addCategory(category: { id: number, category: string, artist: string }): Observable<any> {
     const url = this.baseUrl + 'AddCategory';
     return this.http.post(url, category);
   }
@@ -158,6 +158,18 @@ export class NavigationService {
       }),
       catchError((error) => {
         console.error('Fetch All Items Error:', error); // Log the error
+        throw error;
+      })
+    );
+  }
+
+  insertItem(item: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl + 'InsertItem', item).pipe(
+      tap((res) => {
+        console.log('Insert Item Result:', res); // Log the result
+      }),
+      catchError((error) => {
+        console.error('Insert Item Error:', error); // Log the error
         throw error;
       })
     );

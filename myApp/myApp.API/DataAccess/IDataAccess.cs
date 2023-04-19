@@ -16,6 +16,7 @@ namespace myApp.API.DataAccess
         List<Item> GetItems(string category, string artist, int count);
         List<Item> GetItemsByCategory(string category, string artist);
         List<Item> GetAllItems();
+        int InsertItem(Item item);
         Item GetItem(int id);
         //bool InsertUser(User user);
         //string IsUserPresent(string email, string password);

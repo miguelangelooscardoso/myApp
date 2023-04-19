@@ -72,6 +72,21 @@ namespace myApp.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("InsertItem")]
+        public IActionResult InsertItem([FromBody] Item newItem)
+        {
+            if (newItem == null)
+            {
+                return BadRequest();
+            }
+
+            // Add the new item to the database
+            dataAccess.InsertItem(newItem);
+
+            // Return a success response
+            return Ok();
+        }
+
         [HttpGet("GetAllOffers")]
         public IActionResult GetAllOffers()
         {

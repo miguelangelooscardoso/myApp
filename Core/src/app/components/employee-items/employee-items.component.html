@@ -1,40 +1,68 @@
 <section class="m-3 p-4 border border-dark rounded-3 text-center">
-    <h2 class="mb-4">Items List</h2>
-  </section>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Category</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Discount</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of getItemsForCurrentPage()" [ngClass]="item.itemCategory.category">
-          <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.itemCategory.artistCategory }}</td>
-          <td>{{ item.itemCategory.category }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.price }}€</td>
-          <td>{{ item.offer.title }}</td>
-          <td>
-            <div class="btn-group" role="group" aria-label="Actions">
-              <button class="btn btn-warning mr-2">Update</button>
-              <!-- <button class="btn btn-danger" (click)="deleteItem(item.id)">Delete</button> -->
-              <button class="btn btn-danger">Delete</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <h2 class="mb-4">Items List</h2>
+</section>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Action</th>
+      </tr>
+      <tr [formGroup]="myForm">
+        <td></td>
+        <!-- <td>
+          <input type="text" class="form-control" formControlName="newItemId">
+        </td> -->
+        <td>
+          <input type="text" class="form-control" formControlName="newItemTitle">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="newItemArtist">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="newItemCategory">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="newItemQuantity">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="newItemPrice">
+        </td>
+        <td>
+          <input type="text" class="form-control" formControlName="newItemDiscount">
+        </td>
+        <td>
+          <button class="btn btn-success" (click)="addItem()">Add</button>
+        </td>
+      </tr>
+      
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of getItemsForCurrentPage()" [ngClass]="item.itemCategory.category">
+        <td>{{ item.id }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.itemCategory.artistCategory }}</td>
+        <td>{{ item.itemCategory.category }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}€</td>
+        <td>{{ item.offer.title }}</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Actions">
+            <button class="btn btn-warning mr-2">Update</button>
+            <!-- <button class="btn btn-danger" (click)="deleteItem(item.id)">Delete</button> -->
+            <button class="btn btn-danger">Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
   
   <!-- Pagination -->
   <ul class="pagination justify-content-center mt-4">
