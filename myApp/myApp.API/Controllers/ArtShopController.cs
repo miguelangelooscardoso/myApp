@@ -77,15 +77,23 @@ namespace myApp.API.Controllers
         {
             if (newItem == null)
             {
-                return BadRequest();
+                return BadRequest("The request body must contain a 'newItem' field.");
             }
 
             // Add the new item to the database
-            dataAccess.InsertItem(newItem);
+            try
+            {
+                dataAccess.InsertItem(newItem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             // Return a success response
             return Ok();
         }
+
 
         [HttpGet("GetAllOffers")]
         public IActionResult GetAllOffers()

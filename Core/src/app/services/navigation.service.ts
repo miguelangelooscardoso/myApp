@@ -172,6 +172,11 @@ export class NavigationService {
         console.error('Insert Item Error:', error); // Log the error
         throw error;
       })
+    ).pipe(
+      tap((res) => {
+        console.log('Insert Item Request Body:', JSON.stringify(res.request.body)); // Log the request body
+        console.log('Insert Item Response Body:', JSON.stringify(res.body)); // Log the response body
+      })
     );
   }
 

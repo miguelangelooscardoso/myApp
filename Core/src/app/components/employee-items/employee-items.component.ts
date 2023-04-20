@@ -40,8 +40,29 @@ export class EmployeeItemsComponent implements OnInit {
   }
 
   onSubmit(itemData: any) {
-    this.navigationService.insertItem(itemData).subscribe(
+    console.log('Pre-Request body:', itemData); // Log the pre request body
+    const newItem = {
+      title: itemData.newItemTitle,
+      itemCategory: {
+        category: itemData.newItemCategory,
+        // artistCategory: itemData.newItemArtist // Update property name here
+        artist: itemData.newItemArtist // Update property name here
+      },
+      offer: {
+        title: itemData.newItemDiscount,
+        // discount: itemData.newItemDiscount
+      },
+      price: itemData.newItemPrice,
+      quantity: itemData.newItemQuantity,
+      // imageName: itemData.newItemImageName
+      imageName: '',
+      description: '',
+    };
+    console.log('Request body:', newItem); // Log the request body
+    
+    this.navigationService.insertItem(newItem).subscribe(
       (res) => {
+        console.log('Insertion success:', res);
         console.log('Item inserted successfully');
         // Do something with the response, e.g. display a success message
       },
@@ -53,8 +74,8 @@ export class EmployeeItemsComponent implements OnInit {
   }
 
   addItem() {
-    // add the new item to your data array
-    // reset the form
+    const itemData = this.myForm.value;
+    this.onSubmit(itemData);
     this.myForm.reset();
   }
 

@@ -343,23 +343,24 @@ namespace myApp.API.DataAccess
                 connection.Open();
                 int categoryCount = (int)command.ExecuteScalar();
 
-                // Check if offer exists
-                string offerQuery = "SELECT COUNT(*) FROM Offers WHERE Title = @title AND Discount = @discount;";
-                command.CommandText = offerQuery;
-                command.Parameters.Clear();
-                command.Parameters.AddWithValue("@title", item.Offer.Title);
-                command.Parameters.AddWithValue("@discount", item.Offer.Discount);
-                int offerCount = (int)command.ExecuteScalar();
-
                 if (categoryCount == 0)
                 {
                     throw new Exception("Invalid item category");
                 }
 
-                if (offerCount == 0)
+                // Check if offer exists and retrieve discount
+                string offerSelectQuery = "SELECT Discount FROM Offers WHERE Title = @title";
+                command.CommandText = offerSelectQuery;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@title", item.Offer.Title);
+                object discountObj = command.ExecuteScalar();
+
+                if (discountObj == null)
                 {
                     throw new Exception("Invalid offer");
                 }
+
+                int discount = (int)discountObj;
 
                 // Get CategoryId and OfferId
                 string categorySelectQuery = "SELECT CategoryId FROM ItemCategories WHERE Category = @category AND Artist = @artist;";
@@ -369,17 +370,16 @@ namespace myApp.API.DataAccess
                 command.Parameters.AddWithValue("@artist", item.ItemCategory.Artist);
                 int categoryId = (int)command.ExecuteScalar();
 
-                string offerSelectQuery = "SELECT OfferId FROM Offers WHERE Title = @title AND Discount = @discount;";
-                command.CommandText = offerSelectQuery;
+                string offerIdQuery = "SELECT OfferId FROM Offers WHERE Title = @title";
+                command.CommandText = offerIdQuery;
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@title", item.Offer.Title);
-                command.Parameters.AddWithValue("@discount", item.Offer.Discount);
                 int offerId = (int)command.ExecuteScalar();
 
                 // Insert item
                 string itemQuery = "INSERT INTO Items (Title, Description, Price, Quantity, ImageName, CategoryId, OfferId) " +
                                     "VALUES (@title, @description, @price, @quantity, @imageName, @categoryId, @offerId);" +
-                                    "SELECT CAST(scope_identity() AS int);";
+                                    "SELECT CAST(scope_identity() AS int)";
                 command.CommandText = itemQuery;
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@title", item.Title);
@@ -395,6 +395,8 @@ namespace myApp.API.DataAccess
                 return itemId;
             }
         }
+
+
 
 
         public Item GetItem(int id)
