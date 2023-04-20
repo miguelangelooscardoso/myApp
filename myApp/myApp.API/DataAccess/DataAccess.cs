@@ -551,7 +551,26 @@ namespace myApp.API.DataAccess
         //    return "";
         //}
 
-        public void InsertFeedback(Feedback feedback)
+        //public void InsertFeedback(Feedback feedback)
+        //{
+        //    using SqlConnection connection = new(dbconnection);
+        //    SqlCommand command = new()
+        //    {
+        //        Connection = connection
+        //    };
+
+        //    string query = "INSERT INTO Feedbacks (UserId, ItemId, Feedback, CreatedAt) VALUES (@uid, @pid, @rv, @cat);";
+        //    command.CommandText = query;
+        //    command.Parameters.Add("@uid", System.Data.SqlDbType.Int).Value = feedback.User.Id;
+        //    command.Parameters.Add("@pid", System.Data.SqlDbType.Int).Value = feedback.Item.Id;
+        //    command.Parameters.Add("@rv", System.Data.SqlDbType.NVarChar).Value = feedback.Value;
+        //    command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = feedback.CreatedAt;
+
+        //    connection.Open();
+        //    command.ExecuteNonQuery();
+        //}
+
+        public void InsertFeedback(int userId, int itemId, string feedbackValue, string createdAt)
         {
             using SqlConnection connection = new(dbconnection);
             SqlCommand command = new()
@@ -561,10 +580,10 @@ namespace myApp.API.DataAccess
 
             string query = "INSERT INTO Feedbacks (UserId, ItemId, Feedback, CreatedAt) VALUES (@uid, @pid, @rv, @cat);";
             command.CommandText = query;
-            command.Parameters.Add("@uid", System.Data.SqlDbType.Int).Value = feedback.User.Id;
-            command.Parameters.Add("@pid", System.Data.SqlDbType.Int).Value = feedback.Item.Id;
-            command.Parameters.Add("@rv", System.Data.SqlDbType.NVarChar).Value = feedback.Value;
-            command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = feedback.CreatedAt;
+            command.Parameters.Add("@uid", System.Data.SqlDbType.Int).Value = userId;
+            command.Parameters.Add("@pid", System.Data.SqlDbType.Int).Value = itemId;
+            command.Parameters.Add("@rv", System.Data.SqlDbType.NVarChar).Value = feedbackValue;
+            command.Parameters.Add("@cat", System.Data.SqlDbType.NVarChar).Value = createdAt;
 
             connection.Open();
             command.ExecuteNonQuery();

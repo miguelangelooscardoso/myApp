@@ -259,30 +259,35 @@ export class NavigationService {
   //   );
   // }
 
-  submitFeedback(userid: number, itemid: number, feedback: string) {
-    console.log('Submitting feedback - User ID:', userid);
-    console.log('Submitting feedback - Item ID:', itemid);
-    console.log('Submitting feedback - Feedback Value:', feedback);
+  // submitFeedback(userId: number, itemId: number, feedbackValue: string) {
+  //   console.log('Submitting feedback - User ID:', userId);
+  //   console.log('Submitting feedback - Item ID:', itemId);
+  //   console.log('Submitting feedback - Feedback Value:', feedbackValue);
+  
+  //   let obj: any = {
+  //     UserId: userId,
+  //     ItemId: itemId,
+  //     Feedback: feedbackValue,
+  //     CreatedAt: new Date().toISOString()
+  //   };
+  
+  //   let url = this.baseUrl + "InsertFeedback";
+  //   return this.http.post(url, obj, { responseType: 'text' }).pipe(
+  //     tap((res) => {
+  //       console.log('Submit Feedback Result:', res); // Log the result
+  //     }),
+  //     catchError((error) => {
+  //       console.error('Submit Feedback Error:', error); // Log the error
+  //       throw error;
+  //     })
+  //   );
+  // }
 
-    let obj: any = {
-      User: {
-        Id: userid,
-      },
-      Item: {
-        Id: itemid,
-      },
-      Value: feedback
-    };
-
-    let url = this.baseUrl + "InsertFeedback";
-    return this.http.post(url, obj, { responseType: 'text' }).pipe(
-      tap((res) => {
-        console.log('Submit Feedback Result:', res); // Log the result
-      }),
-      catchError((error) => {
-        console.error('Submit Feedback Error:', error); // Log the error
-        throw error;
-      })
+  submitFeedbackWithParams(params: HttpParams) {
+    return this.http.post<any>(
+      `${this.baseUrl}InsertFeedback`, 
+      {},
+      { params: params }
     );
   }
 

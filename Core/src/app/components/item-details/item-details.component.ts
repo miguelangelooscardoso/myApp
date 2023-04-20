@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -48,19 +49,22 @@ export class ItemDetailsComponent implements OnInit {
     let userid = this.utilityService.getUser().id;
     let itemid = this.item.id;
 
-    this.navigationService
-      .submitFeedback(userid, itemid, feedback)
-      .subscribe(
-        (res) => {
-          console.log('Submit Feedback Result:', res); // Log the result
-          this.feedbackSaved = true;
-          this.fetchAllFeedbacks();
-          this.feedbackControl.setValue('');
-        },
-        (error) => {
-          console.error('Submit Feedback Error:', error); // Log the error
-        }
-      );
+    let params = new HttpParams()
+      .set('userId', userid)
+      .set('itemId', itemid)
+      .set('feedbackValue', feedback);
+
+    this.navigationService.submitFeedbackWithParams(params).subscribe(
+      (res) => {
+        console.log('Submit Feedback Result:', res); // Log the result
+        this.feedbackSaved = true;
+        this.fetchAllFeedbacks();
+        this.feedbackControl.setValue('');
+      },
+      (error) => {
+        console.error('Submit Feedback Error:', error); // Log the error
+      }
+    );
   }
 
   fetchAllFeedbacks() {
@@ -86,5 +90,5 @@ export class ItemDetailsComponent implements OnInit {
     image.src = `../../assets/Items/${imageName}`;
     return image.width > 0 && image.height > 0;
   }
-  
+
 }

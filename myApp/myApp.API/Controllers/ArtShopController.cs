@@ -181,13 +181,22 @@ namespace myApp.API.Controllers
         //    return Ok(token);
         //}
 
+        //[HttpPost("InsertFeedback")]
+        //public IActionResult InsertFeedback([FromBody] Feedback feedback)
+        //{
+        //    feedback.CreatedAt = DateTime.Now.ToString(DateFormat);
+        //    dataAccess.InsertFeedback(feedback);
+        //    return Ok("inserted");
+        //}
+
         [HttpPost("InsertFeedback")]
-        public IActionResult InsertFeedback([FromBody] Feedback feedback)
+        public IActionResult InsertFeedback(int userId, int itemId, string feedbackValue)
         {
-            feedback.CreatedAt = DateTime.Now.ToString(DateFormat);
-            dataAccess.InsertFeedback(feedback);
+            string createdAt = DateTime.Now.ToString(DateFormat);
+            dataAccess.InsertFeedback(userId, itemId, feedbackValue, createdAt);
             return Ok("inserted");
         }
+
 
         [HttpGet("GetItemFeedbacks/{itemId}")]
         public IActionResult GetItemFeedbacks(int itemId)

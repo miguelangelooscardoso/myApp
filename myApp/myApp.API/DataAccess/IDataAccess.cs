@@ -22,7 +22,8 @@ namespace myApp.API.DataAccess
         //bool InsertUser(User user);
         //string IsUserPresent(string email, string password);
         User GetUser(int id);
-        void InsertFeedback(Feedback feedback);
+        //void InsertFeedback(Feedback feedback);
+        void InsertFeedback(int userId, int itemId, string feedbackValue, string createdAt);
         List<Feedback> GetItemFeedbacks(int itemId);
         bool InsertCartItem(int userid, int itemId);
         bool RemoveCartItem(int userId, int itemId);
