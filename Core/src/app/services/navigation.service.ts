@@ -180,6 +180,18 @@ export class NavigationService {
     );
   }
 
+  deleteItem(itemId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}DeleteItem/${itemId}`).pipe(
+      tap((res) => {
+        console.log(`Item with ID ${itemId} deleted successfully.`);
+      }),
+      catchError((error) => {
+        console.error(`Error deleting item with ID ${itemId}: ${error}`);
+        throw error;
+      })
+    );
+  }
+
   getAllOffers() {
     return this.http.get<any[]>(this.baseUrl + 'GetAllOffers', {
       params: new HttpParams()

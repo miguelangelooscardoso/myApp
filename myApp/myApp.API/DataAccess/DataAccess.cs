@@ -396,8 +396,24 @@ namespace myApp.API.DataAccess
             }
         }
 
+        public void DeleteItem(int itemId)
+        {
+            using (SqlConnection connection = new SqlConnection(dbconnection))
+            {
+                SqlCommand command = new SqlCommand()
+                {
+                    Connection = connection
+                };
 
+                // Delete item
+                string itemQuery = "DELETE FROM Items WHERE ItemId = @itemId;";
+                command.CommandText = itemQuery;
+                command.Parameters.AddWithValue("@itemId", itemId);
 
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
 
         public Item GetItem(int id)
         {

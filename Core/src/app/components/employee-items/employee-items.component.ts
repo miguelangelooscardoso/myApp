@@ -59,7 +59,7 @@ export class EmployeeItemsComponent implements OnInit {
       description: '',
     };
     console.log('Request body:', newItem); // Log the request body
-    
+
     this.navigationService.insertItem(newItem).subscribe(
       (res) => {
         console.log('Insertion success:', res);
@@ -78,6 +78,24 @@ export class EmployeeItemsComponent implements OnInit {
     this.onSubmit(itemData);
     this.myForm.reset();
   }
+
+  deleteItem(itemId: number): void {
+    if (confirm('Are you sure you want to delete this item?')) {
+      this.navigationService.deleteItem(itemId).subscribe(
+        (res) => {
+          console.log('Deletion success:', res);
+          console.log('Item deleted successfully');
+          // Remove the deleted item from the items array
+          this.items = this.items.filter((item) => item.id !== itemId);
+        },
+        (error) => {
+          console.error('Error deleting item:', error);
+          // Do something with the error, e.g. display an error message
+        }
+      );
+    }
+  }
+  
 
   // Method to get the items for the current page
   getItemsForCurrentPage(): Item[] {

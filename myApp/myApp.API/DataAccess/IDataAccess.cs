@@ -17,6 +17,7 @@ namespace myApp.API.DataAccess
         List<Item> GetItemsByCategory(string category, string artist);
         List<Item> GetAllItems();
         int InsertItem(Item item);
+        void DeleteItem(int itemId);
         Item GetItem(int id);
         //bool InsertUser(User user);
         //string IsUserPresent(string email, string password);

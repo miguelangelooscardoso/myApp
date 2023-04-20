@@ -94,6 +94,20 @@ namespace myApp.API.Controllers
             return Ok();
         }
 
+        [HttpDelete("DeleteItem/{id}")]
+        public IActionResult DeleteItem(int id)
+        {
+            try
+            {
+                dataAccess.DeleteItem(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+        }
 
         [HttpGet("GetAllOffers")]
         public IActionResult GetAllOffers()
