@@ -36,7 +36,7 @@ This project consists of a e-shop and is an introduction to webdev. However seve
 5. Remove the products with inexistent stock from the users interface.
 6. Make back-end stronger with authorize statements.
 7. Set a temporary token, use a refresh method and remove the token when the user logs out.
-
+ 
 ## Dependencies
 
 This project includes the following dependencies:
